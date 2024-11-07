@@ -16,7 +16,6 @@
   - [Formative Assessment](#formative-assessment)
   - [Summative Assessment](#summative-assessment)
 - [Team Members & Responsibilities](#team-members--responsibilities)
-- [How to Submit](#how-to-submit)
 
 ## Features
 
@@ -71,8 +70,8 @@
 
 ## Team Members & Responsibilities
 
-- **Jason Badwal**: Documentation, presentation coordination, and UML updates.
-- **Arujan Srimohan**: QA testing, savings data visualization, and debugging.
-- **Elaine Nankanja**: Database design and local storage management.
-- **Abdul Rahim Mohsin**: UI development, dialogs, and snackbars.
-- **Rania Rejdal**: Core functionality, lockbox creation, and savings tracking.
+- **Jason Badwal**: 
+- **Arujan Srimohan**: 
+- **Elaine Nankanja**: 
+- **Abdul Rahim Mohsin**: 
+- **Rania Rejdal**: 
