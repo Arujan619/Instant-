@@ -115,6 +115,28 @@ class LandingMain extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    "You have an account?",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const SigninMain()),
+                      );
+                    },
+                    child: const Text(
+                      'Sign in',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
               // App Version
               const Padding(
                 padding: EdgeInsets.only(bottom: 20.0),
