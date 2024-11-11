@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../SignupPage/signup-main.dart';
-import '../HomePage/home-main.dart';
+import '../MainScreen/main-screen.dart';
 
 /*
     Description:
@@ -113,7 +113,7 @@ class SigninMain extends StatelessWidget {
               onPressed: () {
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => const HomeMain()),
+                  MaterialPageRoute(builder: (context) => const MainScreen()),
                 );
               },
               child: const Text('Sign in'),
