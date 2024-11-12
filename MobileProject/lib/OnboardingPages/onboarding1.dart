@@ -33,7 +33,7 @@ class Onboarding1 extends StatelessWidget {
           Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/images/emback.png'),
+                image: AssetImage('assets/backgrounds/emback.png'),
                 fit: BoxFit.cover,
               ),
             ),
@@ -57,7 +57,7 @@ class Onboarding1 extends StatelessWidget {
               ),
               Expanded(
                 child: Center(
-                  child: Image.asset('assets/images/one.png', // TODO: Replace with your image path
+                  child: Image.asset('assets/backgrounds/one.png', // TODO: Replace with your image path
                     width: 397.68,
                     height: 323.14,
                   ),

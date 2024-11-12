@@ -43,7 +43,7 @@ class SigninMain extends StatelessWidget {
           Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/images/emback.png'),
+                image: AssetImage('assets/backgrounds/emback.png'),
                 fit: BoxFit.cover,
               ),
             ),

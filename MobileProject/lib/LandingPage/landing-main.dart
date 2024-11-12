@@ -48,7 +48,7 @@ class LandingMain extends StatelessWidget {
           Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/images/back.png'), // TODO: Add background image
+                image: AssetImage('assets/backgrounds/back.png'), // TODO: Add background image
                 fit: BoxFit.cover,
               ),
             ),
