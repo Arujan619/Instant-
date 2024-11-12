@@ -21,8 +21,7 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 
  */
 
-//Temporary class to help create graph
-
+//Temporary class to help create graph with data points
 class SavingsData {
   final DateTime date;
   final double amount;
@@ -43,19 +42,39 @@ class MetricsMain extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      extendBodyBehindAppBar: true,
       appBar: AppBar(
-        title: const Text('Metrics Page'),
+        backgroundColor: Colors.transparent,
+        // elevation: 0,
+        title: const Align(
+          alignment: Alignment.centerRight, // Aligns the text to the right
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end, // Right-aligns the text within the column
+            mainAxisSize: MainAxisSize.min, // Minimizes vertical space to fit the text
+            children: const [
+              Text(
+                'Metrics',
+                style: TextStyle(fontSize: 28),
+              ),
+              Text(
+                'Instant+',
+                style: TextStyle(fontSize: 18),
+              ),
+            ],
+          ),
+        ),
       ),
-      body: Padding(
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.blue, Colors.white], // Background gradient
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
         padding: const EdgeInsets.all(16.0),
         child: ListView(
           children: [
-            const Text(
-              "Savings Visualizations",
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: Colors.white),
-              textAlign: TextAlign.center,
-            ),
             const SizedBox(height: 16),
             // Floating widget card for Line Chart
             _buildFloatingCard(
