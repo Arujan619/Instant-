@@ -29,97 +29,103 @@ class Onboarding3 extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+      body: Stack(
         children: [
-          // Image in the middle of the page
-          Expanded(
-            child: Center(
-              child: Image.asset(
-                'https://gratisography.com/wp-content/uploads/2024/10/gratisography-cool-cat-1035x780.jpg', // TODO: Replace with your image path
-                width: 200,
-                height: 200,
+          Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage('assets/images/emback.png'),
+                fit: BoxFit.cover,
               ),
             ),
           ),
-          // Text "Money Management"
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.0),
-            child: Text(
-              'Money Management',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-          const SizedBox(height: 10),
-          // Text "Organizing your Goals based on Your Needs"
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.0),
-            child: Text(
-              'Organizing your Goals based on Your Needs',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 20,
-              ),
-            ),
-          ),
-          const SizedBox(height: 20),
-          // Bottom navigation and next button
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // App drawer navigation
+              Expanded(
+                child: Center(
+                  child: Image.asset(
+                    'assets/images/three.png', // TODO: Replace with your image path
+                    width: 357,
+                    height: 232,
+                  ),
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.0),
+                child: Text(
+                  'Money Management',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 30,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 20.0),
+                child: Text(
+                  'Organizing your Goals based on Your Needs',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (context) => const Onboarding1()),
-                      );
-                    },
-                    child: Icon(Icons.circle, color: Colors.grey),
+                  Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(builder: (context) => const Onboarding1()),
+                          );
+                        },
+                        child: Icon(Icons.circle, color: Colors.grey),
+                      ),
+                      const SizedBox(width: 5),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(builder: (context) => const Onboarding2()),
+                          );
+                        },
+                        child: Icon(Icons.circle, color: Colors.grey),
+                      ),
+                      const SizedBox(width: 5),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(builder: (context) => const Onboarding3()),
+                          );
+                        },
+                        child: Icon(Icons.circle, color: Colors.deepPurple),
+                      ),
+                    ],
                   ),
-                  const SizedBox(width: 5),
-                  GestureDetector(
-                    onTap: () {
+                  ElevatedButton(
+                    onPressed: () {
                       Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(builder: (context) => const Onboarding2()),
+                        MaterialPageRoute(builder: (context) => const SigninMain()),
                       );
                     },
-                    child: Icon(Icons.circle, color: Colors.grey),
-                  ),
-                  const SizedBox(width: 5),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (context) => const Onboarding3()),
-                      );
-                    },
-                    child: Icon(Icons.circle, color: Colors.deepPurple),
+                    child: const Text('Get Started'),
                   ),
                 ],
               ),
-              // Next button
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => const SigninMain()),
-                  );
-                },
-                child: const Text('Get Started'),
-              ),
+              const SizedBox(height: 20),
             ],
           ),
-          const SizedBox(height: 20),
         ],
       ),
     );

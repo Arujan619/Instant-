@@ -47,9 +47,8 @@ class LandingMain extends StatelessWidget {
           // Background
           Container(
             decoration: const BoxDecoration(
-              color: Colors.black,
               image: DecorationImage(
-                image: AssetImage(''), // TODO: Add background image
+                image: AssetImage('assets/images/back.png'), // TODO: Add background image
                 fit: BoxFit.cover,
               ),
             ),
@@ -57,16 +56,6 @@ class LandingMain extends StatelessWidget {
           Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              // Image in the middle of the page
-              Expanded(
-                child: Center(
-                  child: Image.asset(
-                    'https://gratisography.com/wp-content/uploads/2024/10/gratisography-cool-cat-1035x780.jpg', // TODO: Replace with your image path
-                    width: 200,
-                    height: 200,
-                  ),
-                ),
-              ),
               // Text "Start taking control of your finances!"
               const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 20.0),
@@ -106,7 +95,7 @@ class LandingMain extends StatelessWidget {
                   const SizedBox(width: 15),
                   // Google "Sign In" button
                   IconButton(
-                    icon: const Icon(Icons.g_mobiledata),
+                    icon: const Icon(Icons.facebook_outlined),
                     color: Colors.white,
                     onPressed: () {
                       // TODO: Google sign in
