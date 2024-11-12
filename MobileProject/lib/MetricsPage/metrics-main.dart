@@ -116,7 +116,7 @@ class MetricsMain extends StatelessWidget {
     return SfCartesianChart(
       primaryXAxis: DateTimeAxis(),
       primaryYAxis: NumericAxis(),
-      series: <ChartSeries>[
+      series: <CartesianSeries>[
         LineSeries<SavingsData, DateTime>(
           dataSource: data,
           xValueMapper: (SavingsData data, _) => data.date,
