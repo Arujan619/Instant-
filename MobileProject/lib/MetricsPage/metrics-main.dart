@@ -31,8 +31,11 @@ class SavingsData {
 
 final List<SavingsData> sampleSavingsData = [
   SavingsData(DateTime(2023, 1, 1), 100),
-  SavingsData(DateTime(2023, 2, 1), 200),
-  SavingsData(DateTime(2023, 3, 1), 350),
+  SavingsData(DateTime(2023, 2, 1), 350),
+  SavingsData(DateTime(2023, 3, 1), 220),
+  SavingsData(DateTime(2023, 4, 1), 320),
+  SavingsData(DateTime(2023, 5, 1), 350),
+  SavingsData(DateTime(2023, 6, 1), 450),
 ];
 
 class MetricsMain extends StatelessWidget {
@@ -75,9 +78,10 @@ class MetricsMain extends StatelessWidget {
           child: ListView(
             children: [
               const SizedBox(height: 16),
+              // Floating widget card for Line Chart
               _buildFloatingCard(
-                title: "Savings Growth (Line Chart)",
-                child: _buildLineChart(sampleSavingsData),
+                title: "Your earnings",
+                child: _buildAreaChart(sampleSavingsData),
               ),
             ],
           ),
@@ -86,15 +90,17 @@ class MetricsMain extends StatelessWidget {
     );
   }
 
+  // Floating widget card builder
   Widget _buildFloatingCard({required String title, required Widget child}) {
     return Card(
+      //elevation sets shadow visibility behind the item
       elevation: 4,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
       ),
       color: Colors.white,
       child: Padding(
-        padding: const EdgeInsets.all(12.0),
+        padding: const EdgeInsets.all(4.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -102,22 +108,33 @@ class MetricsMain extends StatelessWidget {
               title,
               style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 200, child: child),
+            SizedBox(height: 200, child: child), // Set a fixed height for charts
           ],
         ),
       ),
     );
   }
 
-  Widget _buildLineChart(List<SavingsData> data) {
+  // Line Chart
+  Widget _buildAreaChart(List<SavingsData> data) {
     return SfCartesianChart(
-      primaryXAxis: DateTimeAxis(),
-      primaryYAxis: NumericAxis(),
+      plotAreaBorderColor: Colors.transparent,
+      primaryXAxis: DateTimeAxis(isVisible: false),
+      primaryYAxis: NumericAxis(isVisible: false),
+      trackballBehavior: TrackballBehavior(
+        enable: true,
+        activationMode: ActivationMode.singleTap,
+        tooltipSettings: const InteractiveTooltip(
+          enable: true,
+          color: Colors.black,
+        ),
+      ),
       series: <CartesianSeries>[
-        LineSeries<SavingsData, DateTime>(
-          dataSource: data,
-          xValueMapper: (SavingsData data, _) => data.date,
-          yValueMapper: (SavingsData data, _) => data.amount,
+        AreaSeries<SavingsData, DateTime>(
+            dataSource: data,
+            xValueMapper: (SavingsData data, _) => data.date,
+            yValueMapper: (SavingsData data, _) => data.amount,
+            color: Colors.blue.withOpacity(0.5) // Custom color with transparency
         ),
       ],
     );
