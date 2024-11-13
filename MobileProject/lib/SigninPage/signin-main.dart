@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import '../SignupPage/signup-main.dart';
 import '../MainScreen/main-screen.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+
 
 /*
     Description:
@@ -23,8 +25,44 @@ import '../MainScreen/main-screen.dart';
 
  */
 
-class SigninMain extends StatelessWidget {
+class SigninMain extends StatefulWidget {
   const SigninMain({super.key});
+
+  @override
+  _SigninMainState createState() => _SigninMainState();
+}
+
+class _SigninMainState extends State<SigninMain> {
+  final GoogleSignIn _googleSignIn = GoogleSignIn();
+
+  //Google sign-in
+  Future<void> _handleGoogleSignIn() async {
+    try {
+      GoogleSignInAccount? currentUser = _googleSignIn.currentUser;
+      if (currentUser == null) {
+        GoogleSignInAccount? user = await _googleSignIn.signIn();
+        if (user != null) {
+          String userName = user.displayName ?? 'Unknown';
+          String userEmail = user.email;
+          print('Signed in as: $userName, $userEmail');
+
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const MainScreen()),
+          );
+        }
+      } else {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const MainScreen()),
+        );
+      }
+    } catch (error) {
+      print("Error during Google Sign-In: $error");
+    }
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -130,9 +168,7 @@ class SigninMain extends StatelessWidget {
               children: [
                 IconButton(
                   icon: const Icon(Icons.g_mobiledata, color: Colors.white),
-                  onPressed: () {
-                    // TODO: Implement Google sign-in
-                  },
+                  onPressed: _handleGoogleSignIn
                 ),
                 IconButton(
                   icon: const Icon(Icons.link, color: Colors.white),
