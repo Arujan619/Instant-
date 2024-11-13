@@ -21,7 +21,7 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 
  */
 
-//Temporary class to help create graph with data points
+// Temporary class to help create graph with data points
 class SavingsData {
   final DateTime date;
   final double amount;
@@ -31,76 +31,70 @@ class SavingsData {
 
 final List<SavingsData> sampleSavingsData = [
   SavingsData(DateTime(2023, 1, 1), 100),
-  SavingsData(DateTime(2023, 2, 1), 350),
-  SavingsData(DateTime(2023, 3, 1), 220),
-  SavingsData(DateTime(2023, 4, 1), 320),
-  SavingsData(DateTime(2023, 5, 1), 350),
-  SavingsData(DateTime(2023, 6, 1), 450),
+  SavingsData(DateTime(2023, 2, 1), 200),
+  SavingsData(DateTime(2023, 3, 1), 350),
 ];
 
 class MetricsMain extends StatelessWidget {
   const MetricsMain({super.key});
 
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
+    return Container(
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage('assets/backgrounds/emback.png'),
+          fit: BoxFit.cover,
+        ),
+      ),
+      child: Scaffold(
+        // extendBodyBehindAppBar: true,
         backgroundColor: Colors.transparent,
-        // elevation: 0,
-        title: const Align(
-          alignment: Alignment.centerRight, // Aligns the text to the right
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end, // Right-aligns the text within the column
-            mainAxisSize: MainAxisSize.min, // Minimizes vertical space to fit the text
-            children: const [
-              Text(
-                'Metrics',
-                style: TextStyle(fontSize: 28),
-              ),
-              Text(
-                'Instant+',
-                style: TextStyle(fontSize: 18),
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          title: const Align(
+            alignment: Alignment.centerRight,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'Metrics',
+                  style: TextStyle(fontSize: 28),
+                ),
+                Text(
+                  'Instant+',
+                  style: TextStyle(fontSize: 18),
+                ),
+              ],
+            ),
+          ),
+        ),
+        body: Container(
+          padding: const EdgeInsets.all(16.0),
+          child: ListView(
+            children: [
+              const SizedBox(height: 16),
+              _buildFloatingCard(
+                title: "Savings Growth (Line Chart)",
+                child: _buildLineChart(sampleSavingsData),
               ),
             ],
           ),
         ),
       ),
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.blue, Colors.white], // Background gradient
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
-        ),
-        padding: const EdgeInsets.all(16.0),
-        child: ListView(
-          children: [
-            const SizedBox(height: 16),
-            // Floating widget card for Line Chart
-            _buildFloatingCard(
-              title: "Your earnings",
-              child: _buildAreaChart(sampleSavingsData),
-            ),
-          ],
-        ),
-      ),
     );
   }
 
-  // Floating widget card builder
   Widget _buildFloatingCard({required String title, required Widget child}) {
     return Card(
-      //elevation sets shadow visibility behind the item
       elevation: 4,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
       ),
       color: Colors.white,
       child: Padding(
-        padding: const EdgeInsets.all(4.0),
+        padding: const EdgeInsets.all(12.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -108,36 +102,24 @@ class MetricsMain extends StatelessWidget {
               title,
               style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 200, child: child), // Set a fixed height for charts
+            SizedBox(height: 200, child: child),
           ],
         ),
       ),
     );
   }
 
-  // Line Chart
-  Widget _buildAreaChart(List<SavingsData> data) {
+  Widget _buildLineChart(List<SavingsData> data) {
     return SfCartesianChart(
-      plotAreaBorderColor: Colors.transparent,
-      primaryXAxis: DateTimeAxis(isVisible: false),
-      primaryYAxis: NumericAxis(isVisible: false),
-      trackballBehavior: TrackballBehavior(
-        enable: true,
-        activationMode: ActivationMode.singleTap,
-        tooltipSettings: const InteractiveTooltip(
-          enable: true,
-          color: Colors.black,
-        ),
-      ),
+      primaryXAxis: DateTimeAxis(),
+      primaryYAxis: NumericAxis(),
       series: <CartesianSeries>[
-        AreaSeries<SavingsData, DateTime>(
+        LineSeries<SavingsData, DateTime>(
           dataSource: data,
           xValueMapper: (SavingsData data, _) => data.date,
           yValueMapper: (SavingsData data, _) => data.amount,
-          color: Colors.blue.withOpacity(0.5) // Custom color with transparency
         ),
       ],
     );
   }
-
 }

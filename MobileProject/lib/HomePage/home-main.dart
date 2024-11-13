@@ -31,34 +31,38 @@ class HomeMain extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/backgrounds/emback.png'),
-            fit: BoxFit.cover,
-          ),
+    return Container(
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage('assets/backgrounds/emback.png'),
+          fit: BoxFit.cover,
         ),
-        child: Scaffold(
+      ),
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(
           backgroundColor: Colors.transparent,
-          appBar: PreferredSize(
-            preferredSize: const Size.fromHeight(56.0),
-            child: Container(
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [Colors.indigo, Colors.blue],
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
+          title: const Align(
+            alignment: Alignment.centerRight,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'Home',
+                  style: TextStyle(fontSize: 28),
                 ),
-              ),
-              child: AppBar(
-                title: const Text('Home Page', style: TextStyle(color: Colors.white)),
-                backgroundColor: Colors.transparent,
-                elevation: 0,
-              ),
+                Text(
+                  'Instant+',
+                  style: TextStyle(fontSize: 18),
+                ),
+              ],
             ),
           ),
-          body: const RecentTransactions(),
+        ),
+        body: const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 10.0),
+          child: RecentTransactions(),
         ),
       ),
     );
