@@ -51,8 +51,9 @@ class SignupMain extends StatelessWidget {
                     'Sign up',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
+                      fontSize: 32,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: 'Lato',
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -61,7 +62,9 @@ class SignupMain extends StatelessWidget {
                     'Create your new account',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 10,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: 'Lato',
                     ),
                     textAlign: TextAlign.center,
                   ),
@@ -76,13 +79,20 @@ class SignupMain extends StatelessWidget {
                               'First name',
                               style: TextStyle(
                                 color: Colors.white,
+                                fontSize: 16,
                               ),
                             ),
                             const TextField(
+                              obscureText: true,
                               decoration: InputDecoration(
                                 filled: true,
-                                fillColor: Colors.white24,
-                                border: OutlineInputBorder(),
+                                fillColor: Colors.transparent,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(Radius.circular(8)),
+                                  borderSide: BorderSide(color: Color(0xFFFFFFFF)), // light grey color
+                                ),
+                                hintText: 'Apple',
+                                hintStyle: TextStyle(color: Colors.white),
                               ),
                               style: TextStyle(color: Colors.white),
                             ),
@@ -98,13 +108,20 @@ class SignupMain extends StatelessWidget {
                               'Last name',
                               style: TextStyle(
                                 color: Colors.white,
+                                fontSize: 16,
                               ),
                             ),
                             const TextField(
+                              obscureText: true,
                               decoration: InputDecoration(
                                 filled: true,
-                                fillColor: Colors.white24,
-                                border: OutlineInputBorder(),
+                                fillColor: Colors.transparent,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(Radius.circular(8)),
+                                  borderSide: BorderSide(color: Color(0xFFFFFFFF)), // light grey color
+                                ),
+                                hintText: 'Doe',
+                                hintStyle: TextStyle(color: Colors.white),
                               ),
                               style: TextStyle(color: Colors.white),
                             ),
@@ -120,14 +137,20 @@ class SignupMain extends StatelessWidget {
                       'Email',
                       style: TextStyle(
                         color: Colors.white,
+                        fontSize: 16,
                       ),
                     ),
                   ),
                   const TextField(
                     decoration: InputDecoration(
                       filled: true,
-                      fillColor: Colors.white24,
-                      border: OutlineInputBorder(),
+                      fillColor: Colors.transparent,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(8)),
+                        borderSide: BorderSide(color: Color(0xFFFFFFFF)), // light grey color
+                      ),
+                      hintText: 'apple.doe@gmail.com',
+                      hintStyle: TextStyle(color: Colors.white),
                     ),
                     style: TextStyle(color: Colors.white),
                   ),
@@ -138,6 +161,7 @@ class SignupMain extends StatelessWidget {
                       'Password',
                       style: TextStyle(
                         color: Colors.white,
+                        fontSize: 16,
                       ),
                     ),
                   ),
@@ -145,50 +169,95 @@ class SignupMain extends StatelessWidget {
                     obscureText: true,
                     decoration: InputDecoration(
                       filled: true,
-                      fillColor: Colors.white24,
-                      border: OutlineInputBorder(),
+                      fillColor: Colors.transparent,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(8)),
+                        borderSide: BorderSide(color: Color(0xFFFFFFFF)), // light grey color
+                      ),
+                      hintText: '*******',
+                      hintStyle: TextStyle(color: Colors.white),
                     ),
                     style: TextStyle(color: Colors.white),
                   ),
                   const SizedBox(height: 20),
+                  // TODO: Implement sign-up logic. For now, navigate to SigninMain
                   ElevatedButton(
                     onPressed: () {
-                      // TODO: Implement sign-up logic. For now, navigate to SigninMain
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(builder: (context) => const SigninMain()),
                       );
                     },
-                    child: const Text('Sign up'),
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: const Size(339, 44),
+                      backgroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    child: const Text(
+                      'Sign in',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        fontFamily: 'Lato',
+                      ),
+                    ),
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 40),
                   const Divider(color: Colors.white),
                   const Text(
-                    '----- Or sign up with -----',
+                    'Or sign up with',
                     style: TextStyle(color: Colors.white),
                   ),
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 50),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      IconButton(
-                        icon: const Icon(Icons.g_mobiledata, color: Colors.white),
-                        onPressed: () {
-                          // TODO: Implement Google sign-up
-                        },
+                      // Apple "Sign in" button
+                      Container(
+                        height: 61,
+                        width: 61,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(18),
+                          border: Border.all(
+                            color: Colors.white.withOpacity(0.5), // Light grey with 0.5 opacity
+                            width: 1,
+                          ),
+                        ),
+                        child: IconButton(
+                          icon: const Icon(Icons.apple),
+                          color: Colors.white,
+                          onPressed: () {
+                            // TODO: Implement Apple sign-up
+                          },
+                        ),
                       ),
-                      IconButton(
-                        icon: const Icon(Icons.link, color: Colors.white),
-                        onPressed: () {
-                          // TODO: Implement LinkedIn sign-up
-                        },
+                      const SizedBox(width: 15),
+                      // Google "Sign in" button
+                      Container(
+                        height: 61,
+                        width: 61,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(18),
+                          border: Border.all(
+                            color: Colors.white.withOpacity(0.5),
+                            width: 1,
+                          ),
+                        ),
+                        child: IconButton(
+                          icon: SizedBox(
+                            width: 18,
+                            height: 18,
+                            child: Image.asset('assets/icons/google_icon.png'),
+                          ),
+                          onPressed: () {
+                            // TODO: Implement Google sign-up
+                          },
+                        ),
                       ),
-                      IconButton(
-                        icon: const Icon(Icons.apple, color: Colors.white),
-                        onPressed: () {
-                          // TODO: Implement Apple sign-up
-                        },
-                      ),
+                      const SizedBox(width: 15),
                     ],
                   ),
                   const Spacer(),
@@ -196,8 +265,11 @@ class SignupMain extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Text(
-                        'If you have an account?',
-                        style: TextStyle(color: Colors.white),
+                        "If you have an account?",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                        ),
                       ),
                       TextButton(
                         onPressed: () {
@@ -208,7 +280,10 @@ class SignupMain extends StatelessWidget {
                         },
                         child: const Text(
                           'Sign in',
-                          style: TextStyle(color: Colors.purple),
+                          style: TextStyle(
+                            color: Colors.purple,
+                            fontSize: 16,
+                          ),
                         ),
                       ),
                     ],
