@@ -61,7 +61,7 @@ class HomeMain extends StatelessWidget {
           ),
         ),
         body: const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 10.0),
+          padding: EdgeInsets.symmetric(horizontal: 2.0),
           child: RecentTransactions(),
         ),
       ),
