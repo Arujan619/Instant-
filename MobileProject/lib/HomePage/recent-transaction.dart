@@ -16,24 +16,27 @@ TODO:
 class RecentTransactions extends StatelessWidget {
   const RecentTransactions({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    List<Map<String, dynamic>> transactions = [
+  static List<Map<String, dynamic>> getTransactions() {
+    return [
       {
         'type': 'Deposited',
         'amount': 100.01,
-        'date': DateTime.now(),
+        'date': DateTime.now().subtract(Duration(days: 30)),
         'time': '3:24pm',
       },
       {
         'type': 'Withdrawn',
         'amount': -100.00,
-        'date': DateTime.now(),
+        'date': DateTime.now().subtract(Duration(days: 60)),
         'time': '4:15pm',
       },
       // Add more transactions here
     ];
+  }
 
+  @override
+  Widget build(BuildContext context) {
+    List<Map<String, dynamic>> transactions = getTransactions();
     String formattedDate = DateFormat('d MMMM, yyyy').format(DateTime.now());
 
     return Stack(
@@ -52,7 +55,6 @@ class RecentTransactions extends StatelessWidget {
                 ),
                 child: Column(
                   children: [
-                    // Icon
                     Container(
                       margin: const EdgeInsets.symmetric(vertical: 10),
                       width: 40,
@@ -62,18 +64,17 @@ class RecentTransactions extends StatelessWidget {
                         borderRadius: BorderRadius.circular(10),
                       ),
                     ),
-                    // Title (current day)
                     Padding(
                       padding: const EdgeInsets.all(9.0),
                       child: Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
-                            formattedDate,
-                            style: const TextStyle(
-                              fontSize: 26,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
+                          formattedDate,
+                          style: const TextStyle(
+                            fontSize: 26,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                          ),
                         ),
                       ),
                     ),
@@ -85,17 +86,14 @@ class RecentTransactions extends StatelessWidget {
                           var transaction = transactions[index];
                           String formattedDate = DateFormat('MMMM d, yyyy').format(transaction['date']);
                           return ListTile(
-                            // Transaction type Icon
                             leading: Icon(
                               transaction['type'] == 'Deposited' ? Icons.arrow_downward : Icons.arrow_upward,
                               color: Colors.white,
                             ),
-                            // Trasaction type Text
                             title: Text(
                               transaction['type'],
                               style: const TextStyle(fontSize: 20, color: Colors.white),
                             ),
-                            // Transaction date
                             subtitle: Text(
                               formattedDate,
                               style: const TextStyle(fontSize: 15, color: Colors.grey),
@@ -103,12 +101,10 @@ class RecentTransactions extends StatelessWidget {
                             trailing: Column(
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
-                                // Transaction amount
                                 Text(
                                   transaction['amount'] > 0 ? '+\$${transaction['amount']}' : '-\$${transaction['amount'].abs()}',
                                   style: const TextStyle(fontSize: 20, color: Colors.white),
                                 ),
-                                // Transaction time
                                 Text(
                                   transaction['time'],
                                   style: const TextStyle(fontSize: 15, color: Colors.grey),
