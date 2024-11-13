@@ -34,26 +34,25 @@ class Onboarding1 extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const Onboarding3()),
+                );
+              },
+              child: const Text(
+                'Skip',
+                style: TextStyle(color: Colors.white, fontSize: 18, fontFamily: 'lato'),
+              ),
+            ),
+          ],
         ),
         body: Stack(
           children: [
             Column(
               children: [
-                Align(
-                  alignment: Alignment.topRight,
-                  child: TextButton(
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (context) => const Onboarding3()),
-                      );
-                    },
-                    child: const Text(
-                      'Skip',
-                      style: TextStyle(color: Colors.white, fontSize: 18, fontFamily: 'Poppins'),
-                    ),
-                  ),
-                ),
                 Expanded(
                   child: Center(
                     child: Image.asset('assets/backgrounds/one.png', // TODO: Replace with your image path
@@ -63,7 +62,7 @@ class Onboarding1 extends StatelessWidget {
                   ),
                 ),
                 const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20.0),
+                  padding: EdgeInsets.fromLTRB(20.0, 0, 20.0, 10.0),
                   child: Text(
                     'Monitor Progress',
                     textAlign: TextAlign.center,
@@ -71,7 +70,7 @@ class Onboarding1 extends StatelessWidget {
                       fontFamily: 'lato',
                       color: Colors.white,
                       fontSize: 30,
-                      fontWeight: FontWeight.bold,
+                      fontWeight: FontWeight.w600, // Semi-bold
                     ),
                   ),
                 ),
@@ -92,47 +91,17 @@ class Onboarding1 extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(builder: (context) => const Onboarding1()),
-                            );
-                          },
-                          child: Icon(Icons.circle, color: Colors.deepPurple),
+                    Expanded(
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(1.0),
+                          child: const CircleButtonRow(),
                         ),
-                        const SizedBox(width: 5),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(builder: (context) => const Onboarding2()),
-                            );
-                          },
-                          child: Icon(Icons.circle, color: Colors.grey),
-                        ),
-                        const SizedBox(width: 5),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(builder: (context) => const Onboarding3()),
-                            );
-                          },
-                          child: Icon(Icons.circle, color: Colors.grey),
-                        ),
-                      ],
+                      ),
                     ),
-                    IconButton(
-                      icon: const Icon(Icons.arrow_forward, color: Colors.white),
-                      onPressed: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(builder: (context) => const Onboarding2()),
-                        );
-                      },
+                    Padding(
+                      padding: const EdgeInsets.only(right: 15.0),
+                      child: const ArrowForwardButton(),
                     ),
                   ],
                 ),
@@ -140,6 +109,111 @@ class Onboarding1 extends StatelessWidget {
               ],
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+// Tripple dots
+class CircleButtonRow extends StatelessWidget {
+  const CircleButtonRow({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        GestureDetector(
+          onTap: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const Onboarding1()),
+            );
+          },
+          child: Container(
+            width: 10,
+            height: 10,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.deepPurple,
+              border: Border.all(
+                color: Colors.grey,
+                width: 0.5,
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(width: 10),
+        GestureDetector(
+          onTap: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const Onboarding2()),
+            );
+          },
+          child: Container(
+            width: 10,
+            height: 10,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.grey,
+              border: Border.all(
+                color: Colors.grey,
+                width: 0.5,
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(width: 10),
+        GestureDetector(
+          onTap: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const Onboarding3()),
+            );
+          },
+          child: Container(
+            width: 10,
+            height: 10,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.grey,
+              border: Border.all(
+                color: Colors.grey,
+                width: 0.5,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+// Next button
+class ArrowForwardButton extends StatelessWidget {
+  const ArrowForwardButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.centerRight,
+      child: Container(
+        width: 40,
+        height: 40,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: Colors.white,
+        ),
+        child: IconButton(
+          icon: const Icon(Icons.arrow_forward, color: Colors.black),
+          onPressed: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const Onboarding2()),
+            );
+          },
         ),
       ),
     );

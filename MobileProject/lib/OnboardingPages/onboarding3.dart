@@ -35,6 +35,20 @@ class Onboarding3 extends StatelessWidget {
         appBar: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const SigninMain()),
+                );
+              },
+              child: const Text(
+                'Skip',
+                style: TextStyle(color: Colors.white, fontSize: 18, fontFamily: 'lato'),
+              ),
+            ),
+          ],
         ),
         body: Stack(
           children: [
@@ -78,47 +92,17 @@ class Onboarding3 extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Row(
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(builder: (context) => const Onboarding1()),
-                            );
-                          },
-                          child: Icon(Icons.circle, color: Colors.grey),
+                    Expanded(
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(1.0),
+                          child: const CircleButtonRow(),
                         ),
-                        const SizedBox(width: 5),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(builder: (context) => const Onboarding2()),
-                            );
-                          },
-                          child: Icon(Icons.circle, color: Colors.grey),
-                        ),
-                        const SizedBox(width: 5),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(builder: (context) => const Onboarding3()),
-                            );
-                          },
-                          child: Icon(Icons.circle, color: Colors.deepPurple),
-                        ),
-                      ],
+                      ),
                     ),
-                    ElevatedButton(
-                      onPressed: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(builder: (context) => const SigninMain()),
-                        );
-                      },
-                      child: const Text('Get Started'),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 15.0),
+                      child: const GetStartedButton(),
                     ),
                   ],
                 ),
@@ -126,6 +110,111 @@ class Onboarding3 extends StatelessWidget {
               ],
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class CircleButtonRow extends StatelessWidget {
+  const CircleButtonRow({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        GestureDetector(
+          onTap: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const Onboarding1()),
+            );
+          },
+          child: Container(
+            width: 10,
+            height: 10,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.grey,
+              border: Border.all(
+                color: Colors.grey,
+                width: 0.5,
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(width: 10),
+        GestureDetector(
+          onTap: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const Onboarding2()),
+            );
+          },
+          child: Container(
+            width: 10,
+            height: 10,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.grey,
+              border: Border.all(
+                color: Colors.grey,
+                width: 0.5,
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(width: 10),
+        GestureDetector(
+          onTap: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const Onboarding3()),
+            );
+          },
+          child: Container(
+            width: 10,
+            height: 10,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.deepPurple,
+              border: Border.all(
+                color: Colors.grey,
+                width: 0.5,
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class GetStartedButton extends StatelessWidget {
+  const GetStartedButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: () {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const SigninMain()),
+        );
+      },
+      style: ElevatedButton.styleFrom(
+        fixedSize: const Size(135, 22),
+        backgroundColor: Colors.white,
+      ),
+      child: const Center(
+        child: Text(
+          'Get Started',
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 16,
+            fontWeight: FontWeight.w600, // Semi-bold
+          ),
         ),
       ),
     );
