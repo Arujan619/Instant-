@@ -37,33 +37,43 @@ class _MainScreenState extends State<MainScreen> {
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: CircleAvatar(
-              child: Icon(Icons.home),
+              backgroundColor: Colors.purpleAccent,
+              child: Icon(Icons.home, color: Colors.white),
             ),
-            label: 'Home',
+            label: '',
+            backgroundColor: Colors.deepPurple,
           ),
           BottomNavigationBarItem(
             icon: CircleAvatar(
-              child: Icon(Icons.account_balance_wallet),
+              backgroundColor: Colors.purpleAccent,
+              child: Icon(Icons.account_balance_wallet, color: Colors.white),
             ),
-            label: 'Wallet',
+            label: '',
+            backgroundColor: Colors.deepPurple,
           ),
           BottomNavigationBarItem(
             icon: CircleAvatar(
-              child: Icon(Icons.show_chart),
+              backgroundColor: Colors.purpleAccent,
+              child: Icon(Icons.show_chart, color: Colors.white),
             ),
-            label: 'Metrics',
+            label: '',
+            backgroundColor: Colors.deepPurple,
           ),
           BottomNavigationBarItem(
             icon: CircleAvatar(
-              child: Icon(Icons.settings),
+              backgroundColor: Colors.purpleAccent,
+              child: Icon(Icons.settings, color: Colors.white),
             ),
-            label: 'Profile',
+            label: '',
+            backgroundColor: Colors.deepPurple,
           ),
         ],
         currentIndex: _selectedIndex,
-        selectedItemColor: Colors.amber[800],
+        // selectedItemColor: Colors.purple[800], //this changes the color of the selected item's label
         onTap: _onItemTapped,
+        backgroundColor: Colors.transparent,
       ),
     );
+
   }
 }
