@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../SignupPage/signup-main.dart';
 import '../MainScreen/main-screen.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import '../ResetPasswordPage/resetpassword-main.dart';
 
 
 /*
@@ -137,7 +138,10 @@ class _SigninMainState extends State<SigninMain> {
               alignment: Alignment.centerRight,
               child: TextButton(
                 onPressed: () {
-                  // TODO: Navigate to Forgot Password page
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const ResetPasswordPage()),
+                  );
                 },
                 child: const Text(
                   'Forgot Password?',
