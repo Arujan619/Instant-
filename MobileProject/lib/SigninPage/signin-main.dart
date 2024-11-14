@@ -156,7 +156,7 @@ class _SigninMainState extends State<SigninMain>{
                   // const SizedBox(height: 10),
                   // _userUid(),
                   // _signOutButton(),
-                  // const SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   // PASSWORD
                   const Align(
                     alignment: Alignment.centerLeft,
