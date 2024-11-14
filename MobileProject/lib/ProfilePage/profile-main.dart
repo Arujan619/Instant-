@@ -190,34 +190,21 @@ class ProfileMain extends StatelessWidget {
                                     ),
                                   ],
                                 ),
-                                const SizedBox(height: 20),
+                                const SizedBox(height: 45),
                                 // Notifications, Vault Accounts, Security Settings
                                 Column(
-                                  children: [
-                                    ListTile(
-                                      leading: const Icon(Icons.notifications),
-                                      title: const Text('Notifications'),
-                                      trailing: const Icon(Icons.arrow_forward_ios),
-                                      onTap: () {},
-                                    ),
-                                    ListTile(
-                                      leading: const Icon(Icons.account_balance_wallet),
-                                      title: const Text('Vault Accounts'),
-                                      subtitle: const Text('2 Vaults Open'),
-                                      trailing: const Icon(Icons.arrow_forward_ios),
-                                      onTap: () {},
-                                    ),
-                                    ListTile(
-                                      leading: const Icon(Icons.security),
-                                      title: const Text('Security'),
-                                      trailing: const Icon(Icons.arrow_forward_ios),
-                                      onTap: () {},
-                                    ),
+                                  children: const [
+                                    NotificationsTile(),
+                                    SizedBox(height: 15),
+                                    VaultAccountsTile(),
+                                    SizedBox(height: 15),
+                                    SecurityTile(),
                                   ],
-                                ),
+                                )
                               ],
                             ),
                           ),
+                          // Profile Picture
                           Positioned(
                             top: -40, // Adjust this value to control how much the avatar sticks out
                             left: 0,
@@ -234,6 +221,7 @@ class ProfileMain extends StatelessWidget {
                 ),
               ),
             ),
+            // Title
             Positioned(
               top: 0,
               right: 16,
@@ -264,6 +252,177 @@ class ProfileMain extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class NotificationsTile extends StatelessWidget {
+  const NotificationsTile({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 295,
+      height: 68,
+      decoration: BoxDecoration(
+        color: const Color(0xFF20222B),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: ListTile(
+        // Icon
+        leading: Container(
+          width: 40,
+          height: 40,
+          decoration: BoxDecoration(
+            gradient: const LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [Color(0xFF0A28F4), Color(0xFF73A3F8)],
+            ),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: const Center(
+            child: Icon(
+              Icons.notifications_none,
+              color: Colors.grey,
+              size: 23,
+            ),
+          ),
+        ),
+        // Title
+        title: const Text(
+          'Notifications',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        // Arrow
+        trailing: const Icon(
+          Icons.arrow_forward_rounded,
+          size: 30,
+          color: Colors.white,
+        ),
+        onTap: () {},
+      ),
+    );
+  }
+}
+
+class VaultAccountsTile extends StatelessWidget {
+  const VaultAccountsTile({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 295,
+      height: 68,
+      decoration: BoxDecoration(
+        color: const Color(0xFF20222B),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: ListTile(
+        // Icon
+        leading: Container(
+          width: 40,
+          height: 40,
+          decoration: BoxDecoration(
+            gradient: const LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [Color(0xFF95FE99), Color(0xFFF5FEB9)],
+            ),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: const Center(
+            child: Icon(
+              Icons.account_balance_wallet,
+              color: Colors.grey,
+              size: 23,
+            ),
+          ),
+        ),
+        // Title
+        title: const Text(
+          'Vault Accounts',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        // Subtitle
+        subtitle: const Text(
+          '2 Vaults Open',
+          style: TextStyle(
+            color: Colors.grey,
+            fontSize: 12,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        // Arrow
+        trailing: const Icon(
+          Icons.arrow_forward_rounded,
+          size: 30,
+          color: Colors.white,
+        ),
+        onTap: () {},
+      ),
+    );
+  }
+}
+
+class SecurityTile extends StatelessWidget {
+  const SecurityTile({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: 295,
+      height: 68,
+      decoration: BoxDecoration(
+        color: const Color(0xFF20222B),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: ListTile(
+        // Icon
+        leading: Container(
+          width: 40,
+          height: 40,
+          decoration: BoxDecoration(
+            gradient: const LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [Color(0xFFB223F6), Color(0xFFF89273)],
+            ),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: const Center(
+            child: Icon(
+              Icons.security,
+              color: Colors.grey,
+              size: 23,
+            ),
+          ),
+        ),
+        // Title
+        title: const Text(
+          'Security',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
+        // Arrow
+        trailing: const Icon(
+          Icons.arrow_forward_rounded,
+          size: 30,
+          color: Colors.white,
+        ),
+        onTap: () {},
       ),
     );
   }
