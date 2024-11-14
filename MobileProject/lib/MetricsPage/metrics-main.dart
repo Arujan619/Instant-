@@ -51,40 +51,55 @@ class MetricsMain extends StatelessWidget {
         ),
       ),
       child: Scaffold(
-        // extendBodyBehindAppBar: true,
         backgroundColor: Colors.transparent,
         appBar: AppBar(
           backgroundColor: Colors.transparent,
-          title: const Align(
-            alignment: Alignment.centerRight,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  'Metrics',
-                  style: TextStyle(fontSize: 28),
-                ),
-                Text(
-                  'Instant+',
-                  style: TextStyle(fontSize: 18),
-                ),
-              ],
-            ),
-          ),
         ),
-        body: Container(
-          padding: const EdgeInsets.all(16.0),
-          child: ListView(
-            children: [
-              const SizedBox(height: 16),
-              // Floating widget card for Line Chart
-              _buildFloatingCard(
-                title: "Your earnings",
-                child: _buildAreaChart(sampleSavingsData),
+        body: Stack(
+          children: [
+            Container(
+              padding: const EdgeInsets.all(16.0),
+              child: ListView(
+                children: [
+                  const SizedBox(height: 100),
+                  // Floating widget card for Line Chart
+                  _buildFloatingCard(
+                    title: "Your earnings",
+                    child: _buildAreaChart(sampleSavingsData),
+                  ),
+                ],
               ),
-            ],
-          ),
+            ),
+            // Title
+            Positioned(
+              top: 0,
+              right: 16,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisSize: MainAxisSize.min,
+                children: const [
+                  Text(
+                    'Metrics',
+                    style: TextStyle(
+                      fontSize: 40,
+                      fontFamily: 'Poppins',
+                      color: Colors.white,
+                    ),
+                    textAlign: TextAlign.right,
+                  ),
+                  Text(
+                    'Instant+',
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontFamily: 'Poppins',
+                      color: Colors.white,
+                    ),
+                    textAlign: TextAlign.right,
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -93,7 +108,6 @@ class MetricsMain extends StatelessWidget {
   // Floating widget card builder
   Widget _buildFloatingCard({required String title, required Widget child}) {
     return Card(
-      //elevation sets shadow visibility behind the item
       elevation: 4,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
@@ -131,10 +145,10 @@ class MetricsMain extends StatelessWidget {
       ),
       series: <CartesianSeries>[
         AreaSeries<SavingsData, DateTime>(
-            dataSource: data,
-            xValueMapper: (SavingsData data, _) => data.date,
-            yValueMapper: (SavingsData data, _) => data.amount,
-            color: Colors.blue.withOpacity(0.5) // Custom color with transparency
+          dataSource: data,
+          xValueMapper: (SavingsData data, _) => data.date,
+          yValueMapper: (SavingsData data, _) => data.amount,
+          color: Colors.blue.withOpacity(0.5), // Custom color with transparency
         ),
       ],
     );
