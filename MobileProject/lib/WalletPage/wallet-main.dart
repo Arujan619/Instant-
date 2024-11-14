@@ -37,23 +37,39 @@ class WalletMain extends StatelessWidget {
         backgroundColor: Colors.transparent,
         appBar: AppBar(
           backgroundColor: Colors.transparent,
-          title: const Align(
-            alignment: Alignment.centerRight,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  'The Vault',
-                  style: TextStyle(fontSize: 28),
-                ),
-                Text(
-                  'Instant+',
-                  style: TextStyle(fontSize: 18),
-                ),
-              ],
+        ),
+        body: Stack(
+          children: [
+            // Title
+            Positioned(
+              top: 0,
+              right: 16,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisSize: MainAxisSize.min,
+                children: const [
+                  Text(
+                    'Wallet',
+                    style: TextStyle(
+                      fontSize: 40,
+                      fontFamily: 'Poppins',
+                      color: Colors.white,
+                    ),
+                    textAlign: TextAlign.right,
+                  ),
+                  Text(
+                    'Instant+',
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontFamily: 'Poppins',
+                      color: Colors.white,
+                    ),
+                    textAlign: TextAlign.right,
+                  ),
+                ],
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );
