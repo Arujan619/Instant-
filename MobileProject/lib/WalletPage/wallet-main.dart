@@ -220,23 +220,6 @@ class _WalletMainState extends State<WalletMain> {
               ),
             ),
 
-            // Background box card
-            Positioned(
-              top: 410,
-              left: 0,
-              right: 0,
-              child: Center(
-                child: Container(
-                  width: 400,
-                  height: 400,
-                  decoration: BoxDecoration(
-                    color: Color(0xFF191326),
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                ),
-              ),
-            ),
-
             // Cards
             Positioned(
               top: 110,
@@ -278,7 +261,28 @@ class _WalletMainState extends State<WalletMain> {
                   ),
                 ),
               ),
-            )
+            ),
+
+            // Background box card
+            Positioned(
+              top: 550,
+              left: 0,
+              right: 0,
+              child: Center(
+                child: Container(
+                  width: 550,
+                  height: 300,
+                  decoration: BoxDecoration(
+                    color: Color(0xFF0B0D4E),
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(
+                      color: Color(0x84050505),
+                      width: 3,
+                    ),
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
       ),
