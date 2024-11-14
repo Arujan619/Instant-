@@ -42,27 +42,43 @@ class HomeMain extends StatelessWidget {
         backgroundColor: Colors.transparent,
         appBar: AppBar(
           backgroundColor: Colors.transparent,
-          title: const Align(
-            alignment: Alignment.centerRight,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  'Home',
-                  style: TextStyle(fontSize: 28),
-                ),
-                Text(
-                  'Instant+',
-                  style: TextStyle(fontSize: 18),
-                ),
-              ],
-            ),
-          ),
         ),
-        body: const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 2.0),
-          child: RecentTransactions(),
+        body: Stack(
+          children: [
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 2.0),
+              child: RecentTransactions(),
+            ),
+            // Title
+            Positioned(
+              top: 0,
+              right: 16,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisSize: MainAxisSize.min,
+                children: const [
+                  Text(
+                    'Home',
+                    style: TextStyle(
+                      fontSize: 40,
+                      fontFamily: 'Poppins',
+                      color: Colors.white,
+                    ),
+                    textAlign: TextAlign.right,
+                  ),
+                  Text(
+                    'Instant+',
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontFamily: 'Poppins',
+                      color: Colors.white,
+                    ),
+                    textAlign: TextAlign.right,
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );
