@@ -59,104 +59,162 @@ class ProfileMain extends StatelessWidget {
                   children: [
                     const SizedBox(height: 100), // Adjust height as needed
                     Center(
-                      child: Container(
-                        // Profile Card
-                        padding: const EdgeInsets.all(16.0),
-                        decoration: BoxDecoration(
-                          gradient: const LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [Colors.black, Color(0xFF3852C7)],
-                          ),
-                          borderRadius: BorderRadius.circular(32),
-                        ),
-                        width: 360,
-                        height: 595,
+                      child: Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          Container(
+                            // Profile Card
+                            padding: const EdgeInsets.all(16.0),
+                            decoration: BoxDecoration(
+                              gradient: const LinearGradient(
+                                begin: Alignment.topCenter,
+                                end: Alignment.bottomCenter,
+                                colors: [Colors.black, Color(0xFF3852C7)],
+                              ),
+                              borderRadius: BorderRadius.circular(32),
+                            ),
+                            width: 360,
+                            height: 595,
 
-                        // Profile Information
-                        child: Column(
-                          children: [
-                            // Profile Picture
-                            CircleAvatar(
+                            // Profile Information
+                            child: Column(
+                              children: [
+                                const SizedBox(height: 40), // Adjust height as needed
+                                // First and Last Name
+                                const Text(
+                                  'Devon Lane',
+                                  style: TextStyle(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                                const SizedBox(height: 5),
+                                // Phone Number
+                                const Text(
+                                  '(629) 555-0129',
+                                  style: TextStyle(
+                                    fontSize: 14,
+                                    color: Colors.grey,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                                // Edit Profile Button
+                                ElevatedButton(
+                                  onPressed: () {},
+                                  style: ElevatedButton.styleFrom(
+                                    minimumSize: const Size(84, 20),
+                                    backgroundColor: Colors.grey[800],
+                                  ),
+                                  child: const Text(
+                                    'Edit Profile',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 12,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: 20),
+                                // Share, Transfer, Logout Buttons
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Column(
+                                      children: const [
+                                        Icon(
+                                          Icons.send_rounded,
+                                          color: Colors.white,
+                                          size: 24,
+                                        ),
+                                        SizedBox(height: 7),
+                                        Text(
+                                          'Share',
+                                          style: TextStyle(
+                                            color: Colors.grey,
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 12,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Column(
+                                      children: const [
+                                        Icon(
+                                          Icons.compare_arrows_rounded,
+                                          color: Colors.white,
+                                          size: 24,
+                                        ),
+                                        SizedBox(height: 7),
+                                        Text(
+                                          'Transfer',
+                                          style: TextStyle(
+                                            color: Colors.grey,
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 12,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    Column(
+                                      children: const [
+                                        Icon(
+                                          Icons.exit_to_app_rounded,
+                                          color: Colors.red,
+                                          size: 24,
+                                        ),
+                                        SizedBox(height: 7),
+                                        Text(
+                                          'Log out',
+                                          style: TextStyle(
+                                            color: Colors.grey,
+                                            fontWeight: FontWeight.w600,
+                                            fontSize: 12,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 20),
+                                // Notifications, Vault Accounts, Security Settings
+                                Column(
+                                  children: [
+                                    ListTile(
+                                      leading: const Icon(Icons.notifications),
+                                      title: const Text('Notifications'),
+                                      trailing: const Icon(Icons.arrow_forward_ios),
+                                      onTap: () {},
+                                    ),
+                                    ListTile(
+                                      leading: const Icon(Icons.account_balance_wallet),
+                                      title: const Text('Vault Accounts'),
+                                      subtitle: const Text('2 Vaults Open'),
+                                      trailing: const Icon(Icons.arrow_forward_ios),
+                                      onTap: () {},
+                                    ),
+                                    ListTile(
+                                      leading: const Icon(Icons.security),
+                                      title: const Text('Security'),
+                                      trailing: const Icon(Icons.arrow_forward_ios),
+                                      onTap: () {},
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                          Positioned(
+                            top: -40, // Adjust this value to control how much the avatar sticks out
+                            left: 0,
+                            right: 0,
+                            child: CircleAvatar(
                               radius: 40,
-                              backgroundImage: AssetImage('assets/profile_picture.png'), // Replace with your profile picture asset
+                              backgroundImage: AssetImage('assets/temporary/profile_picture.png'),
                             ),
-                            const SizedBox(height: 10),
-                            // First and Last Name
-                            const Text(
-                              'First Last',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const SizedBox(height: 5),
-                            // Phone Number
-                            const Text(
-                              'Phone Number',
-                              style: TextStyle(
-                                fontSize: 16,
-                                color: Colors.grey,
-                              ),
-                            ),
-                            const SizedBox(height: 10),
-                            // Edit Profile Button
-                            ElevatedButton(
-                              onPressed: () {},
-                              child: const Text('Edit Profile'),
-                            ),
-                            const SizedBox(height: 20),
-                            // Share, Transfer, Logout Buttons
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Column(
-                                  children: const [
-                                    Icon(Icons.share),
-                                    Text('Share'),
-                                  ],
-                                ),
-                                Column(
-                                  children: const [
-                                    Icon(Icons.compare_arrows),
-                                    Text('Transfer'),
-                                  ],
-                                ),
-                                Column(
-                                  children: const [
-                                    Icon(Icons.exit_to_app),
-                                    Text('Logout'),
-                                  ],
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 20),
-                            // Notifications, Vault Accounts, Security Settings
-                            Column(
-                              children: [
-                                ListTile(
-                                  leading: const Icon(Icons.notifications),
-                                  title: const Text('Notifications'),
-                                  trailing: const Icon(Icons.arrow_forward_ios),
-                                  onTap: () {},
-                                ),
-                                ListTile(
-                                  leading: const Icon(Icons.account_balance_wallet),
-                                  title: const Text('Vault Accounts'),
-                                  subtitle: const Text('2 Vaults Open'),
-                                  trailing: const Icon(Icons.arrow_forward_ios),
-                                  onTap: () {},
-                                ),
-                                ListTile(
-                                  leading: const Icon(Icons.security),
-                                  title: const Text('Security'),
-                                  trailing: const Icon(Icons.arrow_forward_ios),
-                                  onTap: () {},
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
