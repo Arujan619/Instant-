@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+import 'wallet-cards.dart';
 
 /*
     Description:
@@ -16,15 +18,13 @@
     ...
 
  */
-import 'package:flutter/material.dart';
-import 'wallet-cards.dart';
 
 const double kCardHeight = 225;
 const double kCardWidth = 356;
 
 const double kSpaceBetweenCard = 24;
 const double kSpaceBetweenUnselectCard = 32;
-const double kSpaceUnselectedCardToTop = 320;
+const double kSpaceUnselectedCardToTop = 290;
 
 const Duration kAnimationDuration = Duration(milliseconds: 245);
 
@@ -36,7 +36,7 @@ class WalletMain extends StatefulWidget {
 }
 
 class _WalletMainState extends State<WalletMain> {
-  int? selectedCardIndex;
+  int? selectedCardIndex = 0;
 
   final List<VaultCardData> cardsData = [
     VaultCardData(
@@ -126,12 +126,6 @@ class _WalletMainState extends State<WalletMain> {
     }
   }
 
-  void unSelectCard() {
-    setState(() {
-      selectedCardIndex = null;
-    });
-  }
-
   double totalHeightTotalCard() {
     if (selectedCardIndex == null) {
       final totalCard = vaultCards.length;
@@ -158,54 +152,134 @@ class _WalletMainState extends State<WalletMain> {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
-          title: const Text('Wallet'),
           backgroundColor: Colors.transparent,
         ),
-        body: SizedBox.expand(
-          child: SingleChildScrollView(
-            child: Stack(
-              children: [
-                AnimatedContainer(
-                  duration: kAnimationDuration,
-                  height: totalHeightTotalCard(),
-                  width: mediaQuery.size.width,
+        body: Stack(
+          children: [
+            // Title
+            Positioned(
+              top: 0,
+              right: 16,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisSize: MainAxisSize.min,
+                children: const [
+                  Text(
+                    'Wallet',
+                    style: TextStyle(
+                      fontSize: 40,
+                      fontFamily: 'Poppins',
+                      color: Colors.white,
+                    ),
+                    textAlign: TextAlign.right,
+                  ),
+                  Text(
+                    'Instant+',
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontFamily: 'Poppins',
+                      color: Colors.white,
+                    ),
+                    textAlign: TextAlign.right,
+                  ),
+                ],
+              ),
+            ),
+
+            // + ADD Account Button
+            Positioned(
+              top: 70,
+              left: 16,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Container(
+                    width: 45,
+                    height: 45,
+                    decoration: BoxDecoration(
+                      color: Colors.transparent,
+                      shape: BoxShape.circle,
+                      border: Border.all(color: Colors.white, width: 1),
+                    ),
+                    child: const Icon(
+                      Icons.add,
+                      color: Colors.white,
+                      size: 30,
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  const Text(
+                    'ADD Account',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 15,
+                      fontFamily: 'Poppins',
+                    ),
+                  ),
+                ],
+              ),
+            ),
+
+            // Background box card
+            Positioned(
+              top: 410,
+              left: 0,
+              right: 0,
+              child: Center(
+                child: Container(
+                  width: 400,
+                  height: 400,
+                  decoration: BoxDecoration(
+                    color: Color(0xFF191326),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
                 ),
-                for (int i = 0; i < vaultCards.length; i++)
-                  AnimatedPositioned(
-                    top: _getCardTopPositioned(i, i == selectedCardIndex),
-                    duration: kAnimationDuration,
-                    child: Center(
-                      child: AnimatedScale(
-                        scale: _getCardScale(i, i == selectedCardIndex),
+              ),
+            ),
+
+            // Cards
+            Positioned(
+              top: 110,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              child: SizedBox.expand(
+                child: SingleChildScrollView(
+                  child: Stack(
+                    children: [
+                      AnimatedContainer(
                         duration: kAnimationDuration,
-                        child: Padding(
-                          padding: const EdgeInsets.all(25.0),
-                          child: GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                selectedCardIndex = i;
-                              });
-                            },
-                            child: vaultCards[i],
+                        height: totalHeightTotalCard(),
+                        width: mediaQuery.size.width,
+                      ),
+                      for (int i = 0; i < vaultCards.length; i++)
+                        AnimatedPositioned(
+                          top: _getCardTopPositioned(i, i == selectedCardIndex),
+                          duration: kAnimationDuration,
+                          child: Center(
+                            child: AnimatedScale(
+                              scale: _getCardScale(i, i == selectedCardIndex),
+                              duration: kAnimationDuration,
+                              child: Padding(
+                                padding: const EdgeInsets.all(25.0),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      selectedCardIndex = i;
+                                    });
+                                  },
+                                  child: vaultCards[i],
+                                ),
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                    ),
+                    ],
                   ),
-                if (selectedCardIndex != null)
-                  Positioned.fill(
-                    child: GestureDetector(
-                      onVerticalDragEnd: (_) {
-                        unSelectCard();
-                      },
-                      onVerticalDragStart: (_) {
-                        unSelectCard();
-                      },
-                    ),
-                  ),
-              ],
-            ),
-          ),
+                ),
+              ),
+            )
+          ],
         ),
       ),
     );
