@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import '../Authentication/auth.dart';
 import '../SigninPage/signin-main.dart';
 import '../MainScreen/main-screen.dart';
 
@@ -22,8 +24,114 @@ import '../MainScreen/main-screen.dart';
 
  */
 
-class SignupMain extends StatelessWidget {
+class SignupMain extends StatefulWidget {
   const SignupMain({super.key});
+
+  @override
+  _SignupMainState createState() => _SignupMainState();
+}
+
+class _SignupMainState extends State<SignupMain> {
+  // TODO: SIGNUP WITH EMAIL/PASSWORD
+  // String? errorMessage = '';
+  // bool isLogin = true;
+  //
+  // final TextEditingController _controllerEmail = TextEditingController();
+  // final TextEditingController _controllerPassword = TextEditingController();
+  //
+  // Future<void> signInWithEmailAndPassword() async {
+  //   try {
+  //     await Auth().signInWithEmailAndPassword(
+  //       email: _controllerEmail.text,
+  //       password: _controllerPassword.text,
+  //     );
+  //     Navigator.pushReplacement(
+  //       context,
+  //       MaterialPageRoute(builder: (context) => const MainScreen()),
+  //     );
+  //   } on FirebaseAuthException catch (e) {
+  //     setState(() {
+  //       errorMessage = e.message;
+  //     });
+  //   }
+  // }
+  //
+  // Future<void> createUserWithEmailAndPassword() async {
+  //   try {
+  //     await Auth().createUserWithEmailAndPassword(
+  //       email: _controllerEmail.text,
+  //       password: _controllerPassword.text,
+  //     );
+  //     Navigator.pushReplacement(
+  //       context,
+  //       MaterialPageRoute(builder: (context) => const SigninMain()),
+  //     );
+  //   } on FirebaseAuthException catch (e) {
+  //     setState(() {
+  //       errorMessage = e.message;
+  //     });
+  //   }
+  // }
+  //
+  // Widget _entryField(String title, TextEditingController controller) {
+  //   return TextField(
+  //     controller: controller,
+  //     decoration: InputDecoration(
+  //       labelText: title,
+  //       filled: true,
+  //       fillColor: Colors.transparent,
+  //       border: const OutlineInputBorder(
+  //         borderRadius: BorderRadius.all(Radius.circular(8)),
+  //         borderSide: BorderSide(color: Color(0xFFFFFFFF)), // light grey color
+  //       ),
+  //       hintStyle: const TextStyle(color: Colors.white),
+  //     ),
+  //     style: const TextStyle(color: Colors.white),
+  //   );
+  // }
+  //
+  // Widget _errorMessage() {
+  //   return Text(errorMessage == '' ? '' : 'Humm ? $errorMessage', style: const TextStyle(color: Colors.red));
+  // }
+  //
+  // Widget _submitButton() {
+  //   return ElevatedButton(
+  //     onPressed: isLogin ? signInWithEmailAndPassword : createUserWithEmailAndPassword,
+  //     style: ElevatedButton.styleFrom(
+  //       minimumSize: const Size(339, 44),
+  //       backgroundColor: Colors.white,
+  //       shape: RoundedRectangleBorder(
+  //         borderRadius: BorderRadius.circular(8),
+  //       ),
+  //     ),
+  //     child: Text(
+  //       isLogin ? 'Login' : 'Register',
+  //       style: const TextStyle(
+  //         color: Colors.black,
+  //         fontSize: 14,
+  //         fontWeight: FontWeight.w600,
+  //         fontFamily: 'Lato',
+  //       ),
+  //     ),
+  //   );
+  // }
+  //
+  // Widget _loginOrRegisterButton() {
+  //   return TextButton(
+  //     onPressed: () {
+  //       setState(() {
+  //         isLogin = !isLogin;
+  //       });
+  //     },
+  //     child: Text(
+  //       isLogin ? 'Register instead' : 'Login instead',
+  //       style: const TextStyle(
+  //         color: Colors.purple,
+  //         fontSize: 16,
+  //       ),
+  //     ),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -68,6 +176,20 @@ class SignupMain extends StatelessWidget {
                     ),
                     textAlign: TextAlign.center,
                   ),
+
+                  // TODO: SIGNUP WITH EMAIL/PASSWORD
+                  // const SizedBox(height: 20),
+                  // _entryField('Email', _controllerEmail),
+                  // const SizedBox(height: 20),
+                  // _entryField('Password', _controllerPassword),
+                  // const SizedBox(height: 20),
+                  // _errorMessage(),
+                  // const SizedBox(height: 20),
+                  // _submitButton(),
+                  // const SizedBox(height: 20),
+                  // _loginOrRegisterButton(),
+
+
                   const SizedBox(height: 20),
                   Row(
                     children: [

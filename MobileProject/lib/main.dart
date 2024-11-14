@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'LandingPage/landing-main.dart';
 import 'HomePage/home-main.dart';
+import '../Authentication/widget-tree.dart';
 
 /*
     Description:
@@ -43,6 +44,7 @@ class MyApp extends StatelessWidget {
       // TODO: If user not logged in, show LandingPage, else show HomePage
       // TODO: for now just show LandingPage
       home: const LandingMain(),
+      //TODO: home: const WidgetTree(),
     );
   }
 }
