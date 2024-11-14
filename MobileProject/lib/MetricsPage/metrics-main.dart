@@ -47,6 +47,12 @@ class MetricsMain extends StatelessWidget {
                     title: "Your earnings",
                     child: buildAreaChart(sampleSavingsData),
                   ),
+                  const SizedBox(height: 20),
+                  // Floating widget card for Vaults Chart
+                  buildFloatingCardVault(
+                    title: "Vaults Accounts",
+                    child: buildLineChartVault(sampleVaultsData),
+                  ),
                 ],
               ),
             ),
