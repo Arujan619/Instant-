@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import '../WalletPage/wallet-main.dart';
-import '../MetricsPage/metrics-main.dart';
-import '../ProfilePage/profile-main.dart';
-import 'package:flutter_gradient_app_bar/flutter_gradient_app_bar.dart';
 import 'recent-transaction.dart';
+import 'recent-chart.dart';
 
 
 
@@ -47,7 +44,16 @@ class HomeMain extends StatelessWidget {
           children: [
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 2.0),
-              child: RecentTransactions(),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(top: 70.0),
+                    child: RecentChart(),
+                  ),
+                  // RecentChart(),
+                  Expanded(child: RecentTransactions()),
+                ],
+              ),
             ),
             // Title
             Positioned(

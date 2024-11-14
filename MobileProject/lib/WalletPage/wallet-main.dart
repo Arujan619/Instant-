@@ -1,7 +1,3 @@
-import 'package:flutter/material.dart';
-import '../HomePage/home-main.dart';
-import '../MetricsPage/metrics-main.dart';
-import '../ProfilePage/profile-main.dart';
 
 /*
     Description:
@@ -20,12 +16,138 @@ import '../ProfilePage/profile-main.dart';
     ...
 
  */
+import 'package:flutter/material.dart';
+import 'wallet-cards.dart';
 
-class WalletMain extends StatelessWidget {
+const double kCardHeight = 225;
+const double kCardWidth = 356;
+
+const double kSpaceBetweenCard = 24;
+const double kSpaceBetweenUnselectCard = 32;
+const double kSpaceUnselectedCardToTop = 320;
+
+const Duration kAnimationDuration = Duration(milliseconds: 245);
+
+class WalletMain extends StatefulWidget {
   const WalletMain({super.key});
 
   @override
+  _WalletMainState createState() => _WalletMainState();
+}
+
+class _WalletMainState extends State<WalletMain> {
+  int? selectedCardIndex;
+
+  final List<VaultCardData> cardsData = [
+    VaultCardData(
+      gradient: LinearGradient(
+        colors: [Color(0xFFEF07C8), Color(0xFF111735)],
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+      ),
+    ),
+    VaultCardData(
+      gradient: LinearGradient(
+        colors: [Colors.indigo, Color(0xFF111735)],
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+      ),
+    ),
+    VaultCardData(
+      gradient: LinearGradient(
+        colors: [Color(0xFFE10A3C), Color(0xFF06195A)],
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+      ),
+    ),
+    VaultCardData(
+      gradient: LinearGradient(
+        colors: [Color(0xFF111735), Color(0xFF0B30EA)],
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+      ),
+    ),
+    VaultCardData(
+      gradient: LinearGradient(
+        colors: [Color(0xFF09E6FA), Color(0xFF0625E1)],
+        begin: Alignment.topLeft,
+        end: Alignment.bottomRight,
+      ),
+    ),
+  ];
+
+  late final List<VaultCard> vaultCards;
+
+  @override
+  void initState() {
+    super.initState();
+    vaultCards = cardsData
+        .map((data) => VaultCard(gradient: data.gradient))
+        .toList();
+  }
+
+  int toUnselectedCardPositionIndex(int indexInAllList) {
+    if (selectedCardIndex != null) {
+      if (indexInAllList < selectedCardIndex!) {
+        return indexInAllList;
+      } else {
+        return indexInAllList - 1;
+      }
+    } else {
+      throw 'Wrong usage';
+    }
+  }
+
+  double _getCardTopPositioned(int index, bool isSelected) {
+    if (selectedCardIndex != null) {
+      if (isSelected) {
+        return kSpaceBetweenCard;
+      } else {
+        return kSpaceUnselectedCardToTop +
+            toUnselectedCardPositionIndex(index) * kSpaceBetweenUnselectCard;
+      }
+    } else {
+      return kSpaceBetweenCard + index * kCardHeight + index * kSpaceBetweenCard;
+    }
+  }
+
+  double _getCardScale(int index, bool isSelected) {
+    if (selectedCardIndex != null) {
+      if (isSelected) {
+        return 1.0;
+      } else {
+        int totalUnselectCard = vaultCards.length - 1;
+        return 1.0 -
+            (totalUnselectCard - toUnselectedCardPositionIndex(index) - 1) *
+                0.05;
+      }
+    } else {
+      return 1.0;
+    }
+  }
+
+  void unSelectCard() {
+    setState(() {
+      selectedCardIndex = null;
+    });
+  }
+
+  double totalHeightTotalCard() {
+    if (selectedCardIndex == null) {
+      final totalCard = vaultCards.length;
+      return kSpaceBetweenCard * (totalCard + 1) + kCardHeight * totalCard;
+    } else {
+      return kSpaceUnselectedCardToTop +
+          kCardHeight +
+          (vaultCards.length - 2) * kSpaceBetweenUnselectCard +
+          kSpaceBetweenCard;
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
+
     return Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
@@ -36,228 +158,55 @@ class WalletMain extends StatelessWidget {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
+          title: const Text('Wallet'),
           backgroundColor: Colors.transparent,
         ),
-        body: Stack(
-          children: [
-            // Title
-            Positioned(
-              top: 0,
-              right: 16,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
-                mainAxisSize: MainAxisSize.min,
-                children: const [
-                  Text(
-                    'Wallet',
-                    style: TextStyle(
-                      fontSize: 40,
-                      fontFamily: 'Poppins',
-                      color: Colors.white,
+        body: SizedBox.expand(
+          child: SingleChildScrollView(
+            child: Stack(
+              children: [
+                AnimatedContainer(
+                  duration: kAnimationDuration,
+                  height: totalHeightTotalCard(),
+                  width: mediaQuery.size.width,
+                ),
+                for (int i = 0; i < vaultCards.length; i++)
+                  AnimatedPositioned(
+                    top: _getCardTopPositioned(i, i == selectedCardIndex),
+                    duration: kAnimationDuration,
+                    child: Center(
+                      child: AnimatedScale(
+                        scale: _getCardScale(i, i == selectedCardIndex),
+                        duration: kAnimationDuration,
+                        child: Padding(
+                          padding: const EdgeInsets.all(25.0),
+                          child: GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                selectedCardIndex = i;
+                              });
+                            },
+                            child: vaultCards[i],
+                          ),
+                        ),
+                      ),
                     ),
-                    textAlign: TextAlign.right,
                   ),
-                  Text(
-                    'Instant+',
-                    style: TextStyle(
-                      fontSize: 15,
-                      fontFamily: 'Poppins',
-                      color: Colors.white,
+                if (selectedCardIndex != null)
+                  Positioned.fill(
+                    child: GestureDetector(
+                      onVerticalDragEnd: (_) {
+                        unSelectCard();
+                      },
+                      onVerticalDragStart: (_) {
+                        unSelectCard();
+                      },
                     ),
-                    textAlign: TextAlign.right,
                   ),
-                ],
-              ),
-            ),
-            // AddAccount Button
-            Positioned(
-              top: 100,
-              left: 16,
-              child: TextButton.icon(
-                onPressed: () {
-                  // TODO: Implement AddAccount functionality
-                },
-                icon: const Icon(
-                  Icons.add,
-                  color: Colors.white,
-                  size: 45,
-                ),
-                label: const Text(
-                  'ADD Account',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 15,
-                    fontFamily: 'Poppins',
-                  ),
-                ),
-                style: TextButton.styleFrom(
-                  backgroundColor: Colors.transparent,
-                  side: BorderSide(color: Colors.transparent),
-                ),
-              ),
-            ),
-            // List of VaultCards
-            Positioned(
-              top: 160,
-              left: 16,
-              right: 16,
-              child: Column(
-                children: const [
-                  VaultCard(),
-                  SizedBox(height: 16),
-                  VaultCard(),
-                  SizedBox(height: 16),
-                  VaultCard(),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class VaultCard extends StatelessWidget {
-  const VaultCard({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 343,
-      height: 198,
-      decoration: BoxDecoration(
-        gradient: const LinearGradient(
-          colors: [Color(0xFF1A2887), Color(0xFF7E1D9C)],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Stack(
-        children: [
-          // Edit Button
-          Positioned(
-            top: 8,
-            right: 8,
-            child: Container(
-              width: 30,
-              height: 30,
-              decoration: BoxDecoration(
-                color: Colors.black,
-                shape: BoxShape.circle,
-                border: Border.all(color: Colors.grey, width: 1),
-              ),
-              child: const Icon(
-                Icons.edit_outlined,
-                color: Colors.white,
-                size: 18,
-              ),
-            ),
-          ),
-          // Vault Name
-          Positioned(
-            top: 16,
-            left: 16,
-            child: const Text(
-              'School Trip',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 15,
-                fontWeight: FontWeight.w600,
-                fontFamily: 'Poppins',
-              ),
-            ),
-          ),
-          // Remaining Days
-          Positioned(
-            top: 40,
-            left: 16,
-            child: const Text(
-              '38 Days Remaining',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 13,
-                fontFamily: 'Poppins',
-              ),
-            ),
-          ),
-          // Vault Image
-          Positioned(
-            bottom: 16,
-            left: 16,
-            child: Container(
-              width: 81,
-              height: 81,
-              decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.3),
-                shape: BoxShape.circle,
-              ),
-              child: Center(
-                child: Image(
-                  image: AssetImage('assets/temporary/vault_image.png'),
-                  width: 81,
-                  height: 81,
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-          ),
-          // Goal Column
-          Positioned(
-            bottom: 16,
-            left: 120,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                Text(
-                  'Goal',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 10,
-                    fontFamily: 'Poppins',
-                  ),
-                ),
-                Text(
-                  '\$5000',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                    fontFamily: 'Poppins',
-                  ),
-                ),
               ],
             ),
           ),
-          // Balance Column
-          Positioned(
-            bottom: 16,
-            left: 220,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: const [
-                Text(
-                  'Balance',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 10,
-                    fontFamily: 'Poppins',
-                  ),
-                ),
-                Text(
-                  '\$2000',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
-                    fontFamily: 'Poppins',
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }

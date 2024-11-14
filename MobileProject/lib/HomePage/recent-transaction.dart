@@ -44,9 +44,9 @@ class RecentTransactions extends StatelessWidget {
         Align(
           alignment: Alignment.bottomCenter,
           child: DraggableScrollableSheet(
-            initialChildSize: 0.2,
-            minChildSize: 0.2,
-            maxChildSize: 0.8,
+            initialChildSize: 0.5, // Adjusted to take up more space initially
+            minChildSize: 0.4,
+            maxChildSize: 1.0,
             builder: (BuildContext context, ScrollController scrollController) {
               return Container(
                 decoration: BoxDecoration(
