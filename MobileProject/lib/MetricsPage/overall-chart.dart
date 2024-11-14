@@ -25,18 +25,46 @@ Widget buildFloatingCard({required String title, required Widget child}) {
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(12),
     ),
-    color: Colors.white,
-    child: Padding(
-      padding: const EdgeInsets.all(4.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            title,
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-          SizedBox(height: 200, child: child), // Set a fixed height for charts
-        ],
+    child: Container(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          colors: [Color(0xFF236AA0), Color(0xFF1C0D3A)],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+        ),
+        borderRadius: BorderRadius.all(Radius.circular(12)),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(4.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 5.0),
+                  child: Text(
+                    title,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontFamily: 'Poppins',
+                    ),
+                  ),
+                ),
+                IconButton(
+                  icon: const Icon(Icons.more_vert, color: Colors.white),
+                  onPressed: () {
+                    // Add your onPressed code here!
+                  },
+                ),
+              ],
+            ),
+            SizedBox(height: 200, child: child), // Set a fixed height for charts
+          ],
+        ),
       ),
     ),
   );
@@ -61,7 +89,16 @@ Widget buildAreaChart(List<SavingsData> data) {
         dataSource: data,
         xValueMapper: (SavingsData data, _) => data.date,
         yValueMapper: (SavingsData data, _) => data.amount,
-        color: Colors.blue.withOpacity(0.5), // Custom color with transparency
+        borderColor: const Color(0xFFF6386B),
+        borderWidth: 2,
+        gradient: const LinearGradient(
+          colors: [
+            Color(0xFFF6386B),
+            Color(0xDA6185),
+          ],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+        ),
       ),
     ],
   );
