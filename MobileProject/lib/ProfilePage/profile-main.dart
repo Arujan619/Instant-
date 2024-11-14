@@ -121,6 +121,7 @@ class ProfileMain extends StatelessWidget {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                   children: [
+                                    // Share
                                     Column(
                                       children: const [
                                         Icon(
@@ -139,6 +140,12 @@ class ProfileMain extends StatelessWidget {
                                         ),
                                       ],
                                     ),
+                                    Container(
+                                      height: 70,
+                                      width: 1,
+                                      color: Colors.grey,
+                                    ),
+                                    // Transfer
                                     Column(
                                       children: const [
                                         Icon(
@@ -157,6 +164,12 @@ class ProfileMain extends StatelessWidget {
                                         ),
                                       ],
                                     ),
+                                    Container(
+                                      height: 70,
+                                      width: 1,
+                                      color: Colors.grey,
+                                    ),
+                                    // Logout
                                     Column(
                                       children: const [
                                         Icon(
