@@ -3,6 +3,8 @@ import '../SignupPage/signup-main.dart';
 import '../MainScreen/main-screen.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:social_media_buttons/social_media_buttons.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import '../Authentication/auth.dart';
 
 /*
     Description:
@@ -33,6 +35,25 @@ class SigninMain extends StatefulWidget {
 }
 
 class _SigninMainState extends State<SigninMain>{
+  // TODO: Authenticating with Email/Password
+  // final User? user = Auth().currentUser;
+  //
+  // Future<void> signOut() async {
+  //   await Auth().signOut();
+  // }
+  //
+  // Widget _userUid() {
+  //   return Text(user?.email ?? 'User email', style: const TextStyle(color: Colors.white));
+  // }
+  //
+  // Widget _signOutButton() {
+  //   return ElevatedButton(
+  //     onPressed: signOut,
+  //     child: const Text('Sign Out'),
+  //   );
+  // }
+
+  // Authenticating with Google
   final GoogleSignIn _googleSignIn = GoogleSignIn();
 
   //Google sign-in
@@ -84,6 +105,7 @@ class _SigninMainState extends State<SigninMain>{
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  // TITLE
                   const Text(
                     'Sign in',
                     style: TextStyle(
@@ -106,6 +128,7 @@ class _SigninMainState extends State<SigninMain>{
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 20),
+                  // EMAIL
                   const Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
@@ -129,7 +152,12 @@ class _SigninMainState extends State<SigninMain>{
                     ),
                     style: TextStyle(color: Colors.white),
                   ),
-                  const SizedBox(height: 20),
+                  // TODO: SIGN IN WITH EMAIL/PASSWORD
+                  // const SizedBox(height: 10),
+                  // _userUid(),
+                  // _signOutButton(),
+                  // const SizedBox(height: 20),
+                  // PASSWORD
                   const Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
@@ -155,6 +183,7 @@ class _SigninMainState extends State<SigninMain>{
                     style: TextStyle(color: Colors.white),
                   ),
                   const SizedBox(height: 10),
+                  // FORGOT PASSWORD
                   Align(
                     alignment: Alignment.centerRight,
                     child: TextButton(
@@ -204,6 +233,7 @@ class _SigninMainState extends State<SigninMain>{
                     style: TextStyle(color: Colors.white),
                   ),
                   const SizedBox(height: 50),
+                  // SIGNING WITH SOCIAL MEDIA
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
