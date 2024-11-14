@@ -318,7 +318,7 @@ class _SignupMainState extends State<SignupMain> {
                       ),
                     ),
                     child: const Text(
-                      'Sign in',
+                      'Sign up',
                       style: TextStyle(
                         color: Colors.black,
                         fontSize: 14,

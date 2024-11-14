@@ -48,120 +48,150 @@ class ProfileMain extends StatelessWidget {
         backgroundColor: Colors.transparent,
         appBar: AppBar(
           backgroundColor: Colors.transparent,
-          title: const Align(
-            alignment: Alignment.centerRight,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  'Profile',
-                  style: TextStyle(fontSize: 28),
-                ),
-                Text(
-                  'Instant+',
-                  style: TextStyle(fontSize: 18),
-                ),
-              ],
-            ),
-          ),
         ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 20),
-                Center(
-                  child: Container(
-                    padding: const EdgeInsets.all(16.0),
-                    decoration: BoxDecoration(
-                      color: Colors.grey[200],
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                    child: Column(
-                      children: [
-                        CircleAvatar(
-                          radius: 40,
-                          backgroundImage: AssetImage('assets/profile_picture.png'), // Replace with your profile picture asset
-                        ),
-                        const SizedBox(height: 10),
-                        const Text(
-                          'First Last',
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
+        body: Stack(
+          children: [
+            SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(height: 100), // Adjust height as needed
+                    Center(
+                      child: Container(
+                        // Profile Card
+                        padding: const EdgeInsets.all(16.0),
+                        decoration: BoxDecoration(
+                          gradient: const LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [Colors.black, Color(0xFF3852C7)],
                           ),
+                          borderRadius: BorderRadius.circular(32),
                         ),
-                        const SizedBox(height: 5),
-                        const Text(
-                          'Phone Number',
-                          style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.grey,
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                        ElevatedButton(
-                          onPressed: () {},
-                          child: const Text('Edit Profile'),
-                        ),
-                        const SizedBox(height: 20),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        width: 360,
+                        height: 595,
+
+                        // Profile Information
+                        child: Column(
                           children: [
-                            Column(
-                              children: const [
-                                Icon(Icons.share),
-                                Text('Share'),
+                            // Profile Picture
+                            CircleAvatar(
+                              radius: 40,
+                              backgroundImage: AssetImage('assets/profile_picture.png'), // Replace with your profile picture asset
+                            ),
+                            const SizedBox(height: 10),
+                            // First and Last Name
+                            const Text(
+                              'First Last',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(height: 5),
+                            // Phone Number
+                            const Text(
+                              'Phone Number',
+                              style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.grey,
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            // Edit Profile Button
+                            ElevatedButton(
+                              onPressed: () {},
+                              child: const Text('Edit Profile'),
+                            ),
+                            const SizedBox(height: 20),
+                            // Share, Transfer, Logout Buttons
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Column(
+                                  children: const [
+                                    Icon(Icons.share),
+                                    Text('Share'),
+                                  ],
+                                ),
+                                Column(
+                                  children: const [
+                                    Icon(Icons.compare_arrows),
+                                    Text('Transfer'),
+                                  ],
+                                ),
+                                Column(
+                                  children: const [
+                                    Icon(Icons.exit_to_app),
+                                    Text('Logout'),
+                                  ],
+                                ),
                               ],
                             ),
+                            const SizedBox(height: 20),
+                            // Notifications, Vault Accounts, Security Settings
                             Column(
-                              children: const [
-                                Icon(Icons.compare_arrows),
-                                Text('Transfer'),
-                              ],
-                            ),
-                            Column(
-                              children: const [
-                                Icon(Icons.exit_to_app),
-                                Text('Logout'),
+                              children: [
+                                ListTile(
+                                  leading: const Icon(Icons.notifications),
+                                  title: const Text('Notifications'),
+                                  trailing: const Icon(Icons.arrow_forward_ios),
+                                  onTap: () {},
+                                ),
+                                ListTile(
+                                  leading: const Icon(Icons.account_balance_wallet),
+                                  title: const Text('Vault Accounts'),
+                                  subtitle: const Text('2 Vaults Open'),
+                                  trailing: const Icon(Icons.arrow_forward_ios),
+                                  onTap: () {},
+                                ),
+                                ListTile(
+                                  leading: const Icon(Icons.security),
+                                  title: const Text('Security'),
+                                  trailing: const Icon(Icons.arrow_forward_ios),
+                                  onTap: () {},
+                                ),
                               ],
                             ),
                           ],
                         ),
-                        const SizedBox(height: 20),
-                        Column(
-                          children: [
-                            ListTile(
-                              leading: const Icon(Icons.notifications),
-                              title: const Text('Notifications'),
-                              trailing: const Icon(Icons.arrow_forward_ios),
-                              onTap: () {},
-                            ),
-                            ListTile(
-                              leading: const Icon(Icons.account_balance_wallet),
-                              title: const Text('Vault Accounts'),
-                              subtitle: const Text('2 Vaults Open'),
-                              trailing: const Icon(Icons.arrow_forward_ios),
-                              onTap: () {},
-                            ),
-                            ListTile(
-                              leading: const Icon(Icons.security),
-                              title: const Text('Security'),
-                              trailing: const Icon(Icons.arrow_forward_ios),
-                              onTap: () {},
-                            ),
-                          ],
-                        ),
-                      ],
+                      ),
                     ),
-                  ),
+                  ],
                 ),
-              ],
+              ),
             ),
-          ),
+            Positioned(
+              top: 0,
+              right: 16,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisSize: MainAxisSize.min,
+                children: const [
+                  Text(
+                    'Profile',
+                    style: TextStyle(
+                      fontSize: 40,
+                      fontFamily: 'Poppins',
+                      color: Colors.white,
+                    ),
+                    textAlign: TextAlign.right,
+                  ),
+                  Text(
+                    'Instant+',
+                    style: TextStyle(
+                      fontSize: 15,
+                      fontFamily: 'Poppins',
+                      color: Colors.white,
+                    ),
+                    textAlign: TextAlign.right,
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );
