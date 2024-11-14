@@ -21,7 +21,7 @@ import 'package:syncfusion_flutter_charts/charts.dart';
 
  */
 
-//Temporary class to help create graph with data points
+// Temporary class to help create graph with data points
 class SavingsData {
   final DateTime date;
   final double amount;
@@ -41,50 +41,50 @@ final List<SavingsData> sampleSavingsData = [
 class MetricsMain extends StatelessWidget {
   const MetricsMain({super.key});
 
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
+    return Container(
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage('assets/backgrounds/emback.png'),
+          fit: BoxFit.cover,
+        ),
+      ),
+      child: Scaffold(
+        // extendBodyBehindAppBar: true,
         backgroundColor: Colors.transparent,
-        // elevation: 0,
-        title: const Align(
-          alignment: Alignment.centerRight, // Aligns the text to the right
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.end, // Right-aligns the text within the column
-            mainAxisSize: MainAxisSize.min, // Minimizes vertical space to fit the text
-            children: const [
-              Text(
-                'Metrics',
-                style: TextStyle(fontSize: 28),
-              ),
-              Text(
-                'Instant+',
-                style: TextStyle(fontSize: 18),
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          title: const Align(
+            alignment: Alignment.centerRight,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'Metrics',
+                  style: TextStyle(fontSize: 28),
+                ),
+                Text(
+                  'Instant+',
+                  style: TextStyle(fontSize: 18),
+                ),
+              ],
+            ),
+          ),
+        ),
+        body: Container(
+          padding: const EdgeInsets.all(16.0),
+          child: ListView(
+            children: [
+              const SizedBox(height: 16),
+              // Floating widget card for Line Chart
+              _buildFloatingCard(
+                title: "Your earnings",
+                child: _buildAreaChart(sampleSavingsData),
               ),
             ],
           ),
-        ),
-      ),
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.blue, Colors.white], // Background gradient
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
-        ),
-        padding: const EdgeInsets.all(16.0),
-        child: ListView(
-          children: [
-            const SizedBox(height: 16),
-            // Floating widget card for Line Chart
-            _buildFloatingCard(
-              title: "Your earnings",
-              child: _buildAreaChart(sampleSavingsData),
-            ),
-          ],
         ),
       ),
     );
@@ -131,13 +131,12 @@ class MetricsMain extends StatelessWidget {
       ),
       series: <CartesianSeries>[
         AreaSeries<SavingsData, DateTime>(
-          dataSource: data,
-          xValueMapper: (SavingsData data, _) => data.date,
-          yValueMapper: (SavingsData data, _) => data.amount,
-          color: Colors.blue.withOpacity(0.5) // Custom color with transparency
+            dataSource: data,
+            xValueMapper: (SavingsData data, _) => data.date,
+            yValueMapper: (SavingsData data, _) => data.amount,
+            color: Colors.blue.withOpacity(0.5) // Custom color with transparency
         ),
       ],
     );
   }
-
 }

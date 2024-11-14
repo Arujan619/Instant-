@@ -22,118 +22,199 @@ class Onboarding1 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => const Onboarding3()),
-              );
-            },
-            child: const Text(
-              'Skip',
-              style: TextStyle(color: Colors.white),
-            ),
-          ),
-        ],
+    return Container(
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage('assets/backgrounds/emback.png'),
+          fit: BoxFit.cover,
+        ),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          // Image in the middle of the page
-          Expanded(
-            child: Center(
-              child: Image.asset(
-                'https://gratisography.com/wp-content/uploads/2024/10/gratisography-cool-cat-1035x780.jpg', // TODO: Replace with your image path
-                width: 200,
-                height: 200,
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const Onboarding3()),
+                );
+              },
+              child: const Text(
+                'Skip',
+                style: TextStyle(color: Colors.white, fontSize: 18, fontFamily: 'lato'),
+              ),
+            ),
+          ],
+        ),
+        body: Stack(
+          children: [
+            Column(
+              children: [
+                Expanded(
+                  child: Center(
+                    child: Image.asset('assets/backgrounds/one.png', // TODO: Replace with your image path
+                      width: 397.68,
+                      height: 323.14,
+                    ),
+                  ),
+                ),
+                const Padding(
+                  padding: EdgeInsets.fromLTRB(20.0, 0, 20.0, 10.0),
+                  child: Text(
+                    'Monitor Progress',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: 'lato',
+                      color: Colors.white,
+                      fontSize: 30,
+                      fontWeight: FontWeight.w600, // Semi-bold
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 10),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20.0),
+                  child: Text(
+                    'Visualize your Saving Progress with the Most Intuitive Design',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: 'lato',
+                      color: Colors.white,
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 20),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(1.0),
+                          child: const CircleButtonRow(),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(right: 15.0),
+                      child: const ArrowForwardButton(),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// Tripple dots
+class CircleButtonRow extends StatelessWidget {
+  const CircleButtonRow({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        GestureDetector(
+          onTap: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const Onboarding1()),
+            );
+          },
+          child: Container(
+            width: 10,
+            height: 10,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.deepPurple,
+              border: Border.all(
+                color: Colors.grey,
+                width: 0.5,
               ),
             ),
           ),
-          // Text "Monitor Progress"
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.0),
-            child: Text(
-              'Monitor Progress',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 30,
-                fontWeight: FontWeight.bold,
+        ),
+        const SizedBox(width: 10),
+        GestureDetector(
+          onTap: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const Onboarding2()),
+            );
+          },
+          child: Container(
+            width: 10,
+            height: 10,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.grey,
+              border: Border.all(
+                color: Colors.grey,
+                width: 0.5,
               ),
             ),
           ),
-          const SizedBox(height: 10),
-          // Text "Visualize your Saving Progress with the Most Intuitive Design"
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.0),
-            child: Text(
-              'Visualize your Saving Progress with the Most Intuitive Design',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 20,
+        ),
+        const SizedBox(width: 10),
+        GestureDetector(
+          onTap: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const Onboarding3()),
+            );
+          },
+          child: Container(
+            width: 10,
+            height: 10,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.grey,
+              border: Border.all(
+                color: Colors.grey,
+                width: 0.5,
               ),
             ),
           ),
-          const SizedBox(height: 20),
-          // Bottom navigation and next button
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              // App drawer navigation
-              Row(
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (context) => const Onboarding1()),
-                      );
-                    },
-                    child: Icon(Icons.circle, color: Colors.deepPurple),
-                  ),
-                  const SizedBox(width: 5),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (context) => const Onboarding2()),
-                      );
-                    },
-                    child: Icon(Icons.circle, color: Colors.grey),
-                  ),
-                  const SizedBox(width: 5),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (context) => const Onboarding3()),
-                      );
-                    },
-                    child: Icon(Icons.circle, color: Colors.grey),
-                  ),
-                ],
-              ),
-              // Next button
-              IconButton(
-                icon: const Icon(Icons.arrow_forward, color: Colors.white),
-                onPressed: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => const Onboarding2()),
-                  );
-                },
-              ),
-            ],
-          ),
-          const SizedBox(height: 20),
-        ],
+        ),
+      ],
+    );
+  }
+}
+
+// Next button
+class ArrowForwardButton extends StatelessWidget {
+  const ArrowForwardButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.centerRight,
+      child: Container(
+        width: 40,
+        height: 40,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: Colors.white,
+        ),
+        child: IconButton(
+          icon: const Icon(Icons.arrow_forward, color: Colors.black),
+          onPressed: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const Onboarding2()),
+            );
+          },
+        ),
       ),
     );
   }

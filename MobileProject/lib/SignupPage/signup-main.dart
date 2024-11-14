@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../SigninPage/signin-main.dart';
+import '../MainScreen/main-screen.dart';
 
 /*
     Description:
@@ -26,182 +27,269 @@ class SignupMain extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
+    return Container(
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage('assets/backgrounds/emback.png'),
+          fit: BoxFit.cover,
+        ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+        ),
+        body: Stack(
           children: [
-            const Text(
-              'Sign up',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-              ),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 10),
-            const Text(
-              'Create your new account',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 10,
-              ),
-              textAlign: TextAlign.center,
-            ),
-            const SizedBox(height: 20),
-            Row(
-              children: [
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+            Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text(
+                    'Sign up',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 32,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: 'Lato',
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 10),
+                  const Text(
+                    'Create your new account',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 14,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: 'Lato',
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 20),
+                  Row(
                     children: [
-                      const Text(
-                        'First name',
-                        style: TextStyle(
-                          color: Colors.white,
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'First name',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                              ),
+                            ),
+                            const TextField(
+                              obscureText: true,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Colors.transparent,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(Radius.circular(8)),
+                                  borderSide: BorderSide(color: Color(0xFFFFFFFF)), // light grey color
+                                ),
+                                hintText: 'Apple',
+                                hintStyle: TextStyle(color: Colors.white),
+                              ),
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ],
                         ),
                       ),
-                      const TextField(
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.white24,
-                          border: OutlineInputBorder(),
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              'Last name',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16,
+                              ),
+                            ),
+                            const TextField(
+                              obscureText: true,
+                              decoration: InputDecoration(
+                                filled: true,
+                                fillColor: Colors.transparent,
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.all(Radius.circular(8)),
+                                  borderSide: BorderSide(color: Color(0xFFFFFFFF)), // light grey color
+                                ),
+                                hintText: 'Doe',
+                                hintStyle: TextStyle(color: Colors.white),
+                              ),
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ],
                         ),
-                        style: TextStyle(color: Colors.white),
                       ),
                     ],
                   ),
-                ),
-                const SizedBox(width: 10),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  const SizedBox(height: 20),
+                  const Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Email',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
+                  const TextField(
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: Colors.transparent,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(8)),
+                        borderSide: BorderSide(color: Color(0xFFFFFFFF)), // light grey color
+                      ),
+                      hintText: 'apple.doe@gmail.com',
+                      hintStyle: TextStyle(color: Colors.white),
+                    ),
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  const SizedBox(height: 20),
+                  const Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Password',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
+                  const TextField(
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      filled: true,
+                      fillColor: Colors.transparent,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(8)),
+                        borderSide: BorderSide(color: Color(0xFFFFFFFF)), // light grey color
+                      ),
+                      hintText: '*******',
+                      hintStyle: TextStyle(color: Colors.white),
+                    ),
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  const SizedBox(height: 20),
+                  // TODO: Implement sign-up logic. For now, navigate to SigninMain
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => const SigninMain()),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: const Size(339, 44),
+                      backgroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    child: const Text(
+                      'Sign in',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                        fontFamily: 'Lato',
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 40),
+                  const Divider(color: Colors.white),
+                  const Text(
+                    'Or sign up with',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  const SizedBox(height: 50),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text(
-                        'Last name',
-                        style: TextStyle(
+                      // Apple "Sign in" button
+                      Container(
+                        height: 61,
+                        width: 61,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(18),
+                          border: Border.all(
+                            color: Colors.white.withOpacity(0.5), // Light grey with 0.5 opacity
+                            width: 1,
+                          ),
+                        ),
+                        child: IconButton(
+                          icon: const Icon(Icons.apple),
                           color: Colors.white,
+                          onPressed: () {
+                            // TODO: Implement Apple sign-up
+                          },
                         ),
                       ),
-                      const TextField(
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Colors.white24,
-                          border: OutlineInputBorder(),
+                      const SizedBox(width: 15),
+                      // Google "Sign in" button
+                      Container(
+                        height: 61,
+                        width: 61,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(18),
+                          border: Border.all(
+                            color: Colors.white.withOpacity(0.5),
+                            width: 1,
+                          ),
                         ),
-                        style: TextStyle(color: Colors.white),
+                        child: IconButton(
+                          icon: SizedBox(
+                            width: 18,
+                            height: 18,
+                            child: Image.asset('assets/icons/google_icon.png'),
+                          ),
+                          onPressed: () {
+                            // TODO: Implement Google sign-up
+                          },
+                        ),
+                      ),
+                      const SizedBox(width: 15),
+                    ],
+                  ),
+                  const Spacer(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        "If you have an account?",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 16,
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(builder: (context) => const SigninMain()),
+                          );
+                        },
+                        child: const Text(
+                          'Sign in',
+                          style: TextStyle(
+                            color: Colors.purple,
+                            fontSize: 16,
+                          ),
+                        ),
                       ),
                     ],
                   ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 20),
-            const Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                'Email',
-                style: TextStyle(
-                  color: Colors.white,
-                ),
+                ],
               ),
-            ),
-            const TextField(
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: Colors.white24,
-                border: OutlineInputBorder(),
-              ),
-              style: TextStyle(color: Colors.white),
-            ),
-            const SizedBox(height: 20),
-            const Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                'Password',
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-              ),
-            ),
-            const TextField(
-              obscureText: true,
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: Colors.white24,
-                border: OutlineInputBorder(),
-              ),
-              style: TextStyle(color: Colors.white),
-            ),
-            const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                // TODO: Implement sign-up logic. For now, navigate to SigninMain
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => const SigninMain()),
-                );
-              },
-              child: const Text('Sign up'),
-            ),
-            const SizedBox(height: 20),
-            const Divider(color: Colors.white),
-            const Text(
-              '----- Or sign up with -----',
-              style: TextStyle(color: Colors.white),
-            ),
-            const SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                IconButton(
-                  icon: const Icon(Icons.g_mobiledata, color: Colors.white),
-                  onPressed: () {
-                    // TODO: Implement Google sign-up
-                  },
-                ),
-                IconButton(
-                  icon: const Icon(Icons.link, color: Colors.white),
-                  onPressed: () {
-                    // TODO: Implement LinkedIn sign-up
-                  },
-                ),
-                IconButton(
-                  icon: const Icon(Icons.apple, color: Colors.white),
-                  onPressed: () {
-                    // TODO: Implement Apple sign-up
-                  },
-                ),
-              ],
-            ),
-            const Spacer(),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text(
-                  'If you have an account?',
-                  style: TextStyle(color: Colors.white),
-                ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => const SigninMain()),
-                    );
-                  },
-                  child: const Text(
-                    'Sign in',
-                    style: TextStyle(color: Colors.purple),
-                  ),
-                ),
-              ],
             ),
           ],
         ),

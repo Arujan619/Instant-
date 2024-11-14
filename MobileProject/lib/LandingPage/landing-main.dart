@@ -30,12 +30,15 @@ class LandingMain extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'INSTANT+',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
+        title: const Padding(
+          padding: EdgeInsets.only(left: 25.0, top: 35.0),
+          child: Text(
+            'INSTANT+',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 28,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
         backgroundColor: Colors.transparent,
@@ -47,9 +50,8 @@ class LandingMain extends StatelessWidget {
           // Background
           Container(
             decoration: const BoxDecoration(
-              color: Colors.black,
               image: DecorationImage(
-                image: AssetImage(''), // TODO: Add background image
+                image: AssetImage('assets/backgrounds/back.png'), // TODO: Add background image
                 fit: BoxFit.cover,
               ),
             ),
@@ -57,26 +59,23 @@ class LandingMain extends StatelessWidget {
           Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              // Image in the middle of the page
-              Expanded(
-                child: Center(
-                  child: Image.asset(
-                    'https://gratisography.com/wp-content/uploads/2024/10/gratisography-cool-cat-1035x780.jpg', // TODO: Replace with your image path
-                    width: 200,
-                    height: 200,
-                  ),
-                ),
-              ),
               // Text "Start taking control of your finances!"
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 20.0),
-                child: Text(
-                  'Start taking control of your finances!',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold,
+              Padding(
+                padding: EdgeInsets.only(left: 50.0),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Container(
+                    width: 277.0,
+                    child: const Text(
+                      'Start taking control of your finances!',
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        fontFamily: 'Poppins',
+                        color: Colors.white,
+                        fontSize: 30,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -92,49 +91,109 @@ class LandingMain extends StatelessWidget {
                         MaterialPageRoute(builder: (context) => const Onboarding1()),
                       );
                     },
-                    child: const Text('Get Started'),
+                    style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.zero,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(18),
+                      ),
+                    ),
+                    child: Ink(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [Color(0xFF7388FF), Color(0xFFCA73FF), Color(0xFFFF739D)],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                        borderRadius: BorderRadius.circular(18),
+                        border: Border.all(
+                          color: Colors.white.withOpacity(0.5), // Light grey with 0.5 opacity
+                          width: 1,
+                        ),
+                      ),
+                      child: Container(
+                        width: 162,
+                        height: 61,
+                        alignment: Alignment.center,
+                        child: const Text(
+                          'Get Started',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontFamily: 'Poppins',
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                   const SizedBox(width: 15),
                   // Apple "Sign In" button
-                  IconButton(
-                    icon: const Icon(Icons.apple),
-                    color: Colors.white,
-                    onPressed: () {
-                      // TODO: Apple sign in
-                    },
+                  Container(
+                    height: 61,
+                    width: 61,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(18),
+                      border: Border.all(
+                        color: Colors.white.withOpacity(0.5), // Light grey with 0.5 opacity
+                        width: 1,
+                      ),
+                    ),
+                    child: IconButton(
+                      icon: const Icon(Icons.apple),
+                      color: Colors.white,
+                      onPressed: () {
+                        // TODO: Apple sign in
+                      },
+                    ),
                   ),
                   const SizedBox(width: 15),
                   // Google "Sign In" button
-                  IconButton(
-                    icon: const Icon(Icons.g_mobiledata),
-                    color: Colors.white,
-                    onPressed: () {
-                      // TODO: Google sign in
-                    },
+                  Container(
+                    height: 61,
+                    width: 61,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(18),
+                      border: Border.all(
+                        color: Colors.white.withOpacity(0.5),
+                        width: 1,
+                      ),
+                    ),
+                    child: IconButton(
+                      icon: SizedBox(
+                        width: 18,
+                        height: 18,
+                        child: Image.asset('assets/icons/google_icon.png'),
+                      ),
+                      onPressed: () {
+                        // TODO: Google sign in
+                      },
+                    ),
                   ),
                 ],
               ),
               const SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    "You have an account?",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (context) => const SigninMain()),
-                      );
-                    },
-                    child: const Text(
-                      'Sign in',
+              Padding(
+                padding: EdgeInsets.only(left: 50.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const Text(
+                      "You have an account?",
                       style: TextStyle(color: Colors.white),
                     ),
-                  ),
-                ],
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (context) => const SigninMain()),
+                        );
+                      },
+                      child: const Text(
+                        'Sign in',
+                        style: TextStyle(color: Colors.purple),
+                      ),
+                    ),
+                  ],
+                ),
               ),
               const SizedBox(height: 20),
               // App Version
