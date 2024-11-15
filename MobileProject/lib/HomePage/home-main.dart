@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:mobileproject/HomePage/advice.dart';
 import 'recent-transaction.dart';
 import 'recent-chart.dart';
 import '../Classes/overall.dart';
-
+import 'advice.dart';
 
 /*
     Description:
@@ -47,7 +48,14 @@ class HomeMain extends StatelessWidget {
               child: Column(
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(top: 70.0),
+                    padding: EdgeInsets.only(top: 0.0, right:200.0, left:10.0),
+                    child: FractionallySizedBox(
+                      widthFactor: 1.2,
+                      child: Advice()
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 0.0),
                     child: RecentChart(),
                   ),
                   // RecentChart(),
