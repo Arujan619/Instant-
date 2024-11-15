@@ -10,11 +10,11 @@ class UserInfo {
 
   // Constructor
   UserInfo()
-      : profileImage = Image.asset('assets/default_profile.png'),
-        firstName = '',
-        lastName = '',
-        phoneNumber = '',
-        email = '';
+      : profileImage = Image.asset('assets/temporary/profile_picture.png'),
+        firstName = 'John',
+        lastName = 'Doe',
+        phoneNumber = '(629) 555 - 0129',
+        email = 'john.doe@gmail.com';
 
   UserInfo.parameterized({
     required this.profileImage,
@@ -46,6 +46,7 @@ class UserInfo {
   }
 
   // Getters
+  // TODO: will link to 'Edit Profile' page
   Image getProfileImage() {
     return profileImage;
   }

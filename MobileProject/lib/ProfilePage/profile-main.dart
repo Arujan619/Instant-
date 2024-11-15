@@ -4,6 +4,8 @@ import '../WalletPage/wallet-main.dart';
 import '../MetricsPage/metrics-main.dart';
 import 'edit-profile.dart';
 import '../LandingPage/landing-main.dart';
+import 'package:provider/provider.dart';
+import '../Classes/overall.dart';
 
 /*
     Description:
@@ -83,23 +85,35 @@ class ProfileMain extends StatelessWidget {
                               children: [
                                 const SizedBox(height: 40), // Adjust height as needed
                                 // First and Last Name
-                                const Text(
-                                  'Devon Lane',
-                                  style: TextStyle(
-                                    fontSize: 24,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.white,
-                                  ),
+                                Consumer<Overall>(
+                                  builder: (context, overall, child) {
+                                    final userInfo = overall.getUserInfo();
+                                    final fullName = '${userInfo.getFirstName()} ${userInfo.getLastName()}';
+                                    return Text(
+                                      fullName,
+                                      style: const TextStyle(
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                      ),
+                                    );
+                                  },
                                 ),
                                 const SizedBox(height: 5),
                                 // Phone Number
-                                const Text(
-                                  '(629) 555-0129',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.grey,
-                                    fontWeight: FontWeight.w600,
-                                  ),
+                                Consumer<Overall>(
+                                  builder: (context, overall, child) {
+                                    final userInfo = overall.getUserInfo();
+                                    final phoneNumber = userInfo.getPhoneNumber();
+                                    return Text(
+                                      phoneNumber,
+                                      style: const TextStyle(
+                                        fontSize: 14,
+                                        color: Colors.grey,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    );
+                                  },
                                 ),
                                 const SizedBox(height: 10),
                                 // Edit Profile Button
@@ -225,9 +239,13 @@ class ProfileMain extends StatelessWidget {
                             top: -40, // Adjust this value to control how much the avatar sticks out
                             left: 0,
                             right: 0,
-                            child: CircleAvatar(
-                              radius: 40,
-                              backgroundImage: AssetImage('assets/temporary/profile_picture.png'),
+                            child: Consumer<Overall>(
+                              builder: (context, overall, child) {
+                                return CircleAvatar(
+                                  radius: 40,
+                                  backgroundImage: overall.getUserInfo().getProfileImage().image,
+                                );
+                              },
                             ),
                           ),
                         ],
