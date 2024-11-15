@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import '../HomePage/home-main.dart';
 import '../WalletPage/wallet-main.dart';
 import '../MetricsPage/metrics-main.dart';
+import 'edit-profile.dart';
+import '../LandingPage/landing-main.dart';
 
 /*
     Description:
@@ -102,7 +104,12 @@ class ProfileMain extends StatelessWidget {
                                 const SizedBox(height: 10),
                                 // Edit Profile Button
                                 ElevatedButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => EditProfilePage()),
+                                    );
+                                  },
                                   style: ElevatedButton.styleFrom(
                                     minimumSize: const Size(84, 20),
                                     backgroundColor: Colors.grey[800],
@@ -170,23 +177,32 @@ class ProfileMain extends StatelessWidget {
                                       color: Colors.grey,
                                     ),
                                     // Logout
-                                    Column(
-                                      children: const [
-                                        Icon(
-                                          Icons.exit_to_app_rounded,
-                                          color: Colors.red,
-                                          size: 24,
-                                        ),
-                                        SizedBox(height: 7),
-                                        Text(
-                                          'Log out',
-                                          style: TextStyle(
-                                            color: Colors.grey,
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 12,
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.pushAndRemoveUntil(
+                                          context,
+                                          MaterialPageRoute(builder: (context) => LandingMain()),
+                                              (Route<dynamic> route) => false,
+                                        );
+                                      },
+                                      child: Column(
+                                        children: const [
+                                          Icon(
+                                            Icons.exit_to_app_rounded,
+                                            color: Colors.red,
+                                            size: 24,
                                           ),
-                                        ),
-                                      ],
+                                          SizedBox(height: 7),
+                                          Text(
+                                            'Log out',
+                                            style: TextStyle(
+                                              color: Colors.grey,
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 12,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ],
                                 ),
