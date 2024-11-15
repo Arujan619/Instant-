@@ -1,6 +1,9 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:provider/provider.dart';
+import '../Classes/overall.dart';
+import '../Classes/user_info.dart';
 
 class EditProfilePage extends StatefulWidget {
   @override
@@ -16,9 +19,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
   Future<void> _pickImage() async {
     final ImagePicker _picker = ImagePicker();
     final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
-    setState(() {
-      _profileImage = image;
-    });
+    if (image != null) {
+      setState(() {
+        _profileImage = image;
+      });
+      // Update the profile image in Overall
+      final overall = Provider.of<Overall>(context, listen: false);
+      overall.userInfo.setProfileImage(Image.file(File(image.path)));
+    }
   }
 
   @override
