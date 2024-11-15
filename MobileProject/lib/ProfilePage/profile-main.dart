@@ -143,17 +143,17 @@ class ProfileMain extends StatelessWidget {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                   children: [
-                                    // Share
+                                    // Deposit to Vault
                                     Column(
                                       children: const [
                                         Icon(
-                                          Icons.send_rounded,
+                                          Icons.file_download,
                                           color: Colors.white,
                                           size: 24,
                                         ),
                                         SizedBox(height: 7),
                                         Text(
-                                          'Share',
+                                          'Deposit',
                                           style: TextStyle(
                                             color: Colors.grey,
                                             fontWeight: FontWeight.w600,
@@ -167,17 +167,17 @@ class ProfileMain extends StatelessWidget {
                                       width: 1,
                                       color: Colors.grey,
                                     ),
-                                    // Transfer
+                                    // Withdraw from Vault
                                     Column(
                                       children: const [
                                         Icon(
-                                          Icons.compare_arrows_rounded,
+                                          Icons.file_upload,
                                           color: Colors.white,
                                           size: 24,
                                         ),
                                         SizedBox(height: 7),
                                         Text(
-                                          'Transfer',
+                                          'Withdraw',
                                           style: TextStyle(
                                             color: Colors.grey,
                                             fontWeight: FontWeight.w600,
