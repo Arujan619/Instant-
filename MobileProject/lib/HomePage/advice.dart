@@ -25,7 +25,7 @@ class _AdviceState extends State<Advice> {
         var response = await http.get(Uri.parse('https://api.adviceslip.com/advice'));
         if (response.statusCode == 200) {
           final data = json.decode(response.body);
-          if (data['slip']['advice'].split(' ').length < 10){
+          if (data['slip']['advice'].split(' ').length < 10){//constrain advice to be a certain word count
             setState(() {
               _advice = data['slip']['advice'];
               _isLoading = false;
@@ -34,7 +34,7 @@ class _AdviceState extends State<Advice> {
         } else {
           throw Exception('Failed to load advice');
         }
-      } while(_advice == null); //constrain advice to be a certain word count
+      } while(_advice == null); 
 
     } catch (e) {
       setState(() {
