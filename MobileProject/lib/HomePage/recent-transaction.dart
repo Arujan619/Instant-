@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import '../Classes/overall.dart';
 
 /*
 TODO:
@@ -7,11 +9,7 @@ TODO:
 - Recent Transactions are displayed in a draggable sheet
 - Each transaction is a ListTile
 -Populate with data
-
-
  */
-
-
 
 class RecentTransactions extends StatelessWidget {
   const RecentTransactions({super.key});
@@ -37,7 +35,8 @@ class RecentTransactions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Map<String, dynamic>> transactions = getTransactions();
-    String formattedDate = DateFormat('d MMMM, yyyy').format(DateTime.now());
+    final overall = Provider.of<Overall>(context);
+    String formattedDate = overall.getCurrentDayMonthYear();
 
     return Stack(
       children: [

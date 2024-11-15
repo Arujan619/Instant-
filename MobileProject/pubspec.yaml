@@ -53,6 +53,9 @@ dependencies:
   cloud_functions: ^5.1.5
   firebase_database: ^11.1.3
 
+  # To use a object class throughout entire app
+  provider: ^6.0.0
+
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

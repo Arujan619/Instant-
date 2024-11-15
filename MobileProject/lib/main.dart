@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 import 'LandingPage/landing-main.dart';
 import 'HomePage/home-main.dart';
 import '../Authentication/widget-tree.dart';
+import '../Classes/overall.dart';
 
 /*
     Description:
@@ -33,18 +35,20 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Instant+',
-      theme: ThemeData(
-        // TODO: Change color scheme
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+    return ChangeNotifierProvider<Overall>(
+      create: (context) => Overall(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Instant+',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+        ),
+        // TODO: If user not logged in, show LandingPage, else show HomePage
+        // TODO: for now just show LandingPage
+        home: const LandingMain(),
+        //TODO: home: const WidgetTree(),
       ),
-      // TODO: If user not logged in, show LandingPage, else show HomePage
-      // TODO: for now just show LandingPage
-      home: const LandingMain(),
-      //TODO: home: const WidgetTree(),
     );
   }
 }

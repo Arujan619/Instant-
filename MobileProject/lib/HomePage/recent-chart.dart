@@ -1,15 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
+import '../Classes/overall.dart';
 
 class RecentChart extends StatelessWidget {
   const RecentChart({super.key});
 
   @override
   Widget build(BuildContext context) {
-    String currentDate = DateFormat('MMM yyyy').format(DateTime.now());
-    String overallBalance = '\$5,321.00';
-    String profitOrLoss = '-\$435.35'; // Change this value as needed
+    final overall = Provider.of<Overall>(context);
+    // TODO: TEMPORARY
+    overall.setCurrentMonthYear();
+    overall.setCurrentDayMonthYear();
+    overall.setCurrentBalance(5321.00); // Example balance
+    overall.setCurrentProfit(-435.35); // Example profit
+
+    String currentDate = overall.getCurrentMonthYear();
+    String overallBalance = '\$${overall.getCurrentBalance().toStringAsFixed(2)}';
+    String profitOrLoss = '\$${overall.getCurrentProfit().toStringAsFixed(2)}';
 
     return Padding(
       padding: const EdgeInsets.all(8.0),
