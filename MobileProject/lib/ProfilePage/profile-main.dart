@@ -7,6 +7,8 @@ import '../LandingPage/landing-main.dart';
 import 'package:provider/provider.dart';
 import '../Classes/overall.dart';
 import 'payment-method.dart';
+import 'deposit.dart';
+import 'withdraw.dart';
 
 /*
     Description:
@@ -144,23 +146,32 @@ class ProfileMain extends StatelessWidget {
                                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                   children: [
                                     // Deposit to Vault
-                                    Column(
-                                      children: const [
-                                        Icon(
-                                          Icons.file_download,
-                                          color: Colors.white,
-                                          size: 24,
-                                        ),
-                                        SizedBox(height: 7),
-                                        Text(
-                                          'Deposit',
-                                          style: TextStyle(
-                                            color: Colors.grey,
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 12,
+                                    // Inside ProfileMain class in profile-main.dart
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(builder: (context) => DepositPage()),
+                                        );
+                                      },
+                                      child: Column(
+                                        children: const [
+                                          Icon(
+                                            Icons.file_download,
+                                            color: Colors.white,
+                                            size: 24,
                                           ),
-                                        ),
-                                      ],
+                                          SizedBox(height: 7),
+                                          Text(
+                                            'Deposit',
+                                            style: TextStyle(
+                                              color: Colors.grey,
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 12,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                     Container(
                                       height: 70,
@@ -168,23 +179,31 @@ class ProfileMain extends StatelessWidget {
                                       color: Colors.grey,
                                     ),
                                     // Withdraw from Vault
-                                    Column(
-                                      children: const [
-                                        Icon(
-                                          Icons.file_upload,
-                                          color: Colors.white,
-                                          size: 24,
-                                        ),
-                                        SizedBox(height: 7),
-                                        Text(
-                                          'Withdraw',
-                                          style: TextStyle(
-                                            color: Colors.grey,
-                                            fontWeight: FontWeight.w600,
-                                            fontSize: 12,
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(builder: (context) => WithdrawPage()),
+                                        );
+                                      },
+                                      child: Column(
+                                        children: const [
+                                          Icon(
+                                            Icons.file_upload,
+                                            color: Colors.white,
+                                            size: 24,
                                           ),
-                                        ),
-                                      ],
+                                          SizedBox(height: 7),
+                                          Text(
+                                            'Withdraw',
+                                            style: TextStyle(
+                                              color: Colors.grey,
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: 12,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                     Container(
                                       height: 70,
