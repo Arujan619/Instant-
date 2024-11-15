@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'payment_method.dart';
 
 class UserInfo {
   // Data members
@@ -7,6 +8,7 @@ class UserInfo {
   String lastName;
   String phoneNumber;
   String email;
+  List<PaymentMethod> paymentMethods;
 
   // Constructor
   UserInfo()
@@ -14,7 +16,8 @@ class UserInfo {
         firstName = 'John',
         lastName = 'Doe',
         phoneNumber = '(629) 555 - 0129',
-        email = 'john.doe@gmail.com';
+        email = 'john.doe@gmail.com',
+        paymentMethods = [];
 
   UserInfo.parameterized({
     required this.profileImage,
@@ -22,6 +25,7 @@ class UserInfo {
     required this.lastName,
     required this.phoneNumber,
     required this.email,
+    required this.paymentMethods,
   });
 
   // Setters
@@ -45,8 +49,11 @@ class UserInfo {
     this.email = email;
   }
 
+  void setPaymentMethods(List<PaymentMethod> paymentMethods) {
+    this.paymentMethods = paymentMethods;
+  }
+
   // Getters
-  // TODO: will link to 'Edit Profile' page
   Image getProfileImage() {
     return profileImage;
   }
@@ -65,5 +72,13 @@ class UserInfo {
 
   String getEmail() {
     return email;
+  }
+
+  List<PaymentMethod> getPaymentMethods() {
+    return paymentMethods;
+  }
+
+  String getNumberOfPaymentMethods() {
+    return paymentMethods.isEmpty ? 'No' : paymentMethods.length.toString();
   }
 }

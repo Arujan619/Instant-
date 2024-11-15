@@ -6,6 +6,7 @@ import 'edit-profile.dart';
 import '../LandingPage/landing-main.dart';
 import 'package:provider/provider.dart';
 import '../Classes/overall.dart';
+import 'payment-method.dart';
 
 /*
     Description:
@@ -226,7 +227,7 @@ class ProfileMain extends StatelessWidget {
                                   children: const [
                                     NotificationsTile(),
                                     SizedBox(height: 15),
-                                    VaultAccountsTile(),
+                                    PaymentMethodTile(),
                                     SizedBox(height: 15),
                                     SecurityTile(),
                                   ],
@@ -345,8 +346,8 @@ class NotificationsTile extends StatelessWidget {
   }
 }
 
-class VaultAccountsTile extends StatelessWidget {
-  const VaultAccountsTile({super.key});
+class PaymentMethodTile extends StatelessWidget {
+  const PaymentMethodTile({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -380,7 +381,7 @@ class VaultAccountsTile extends StatelessWidget {
         ),
         // Title
         title: const Text(
-          'Vault Accounts',
+          'Link Bank Account',
           style: TextStyle(
             color: Colors.white,
             fontSize: 16,
@@ -388,13 +389,19 @@ class VaultAccountsTile extends StatelessWidget {
           ),
         ),
         // Subtitle
-        subtitle: const Text(
-          '2 Vaults Open',
-          style: TextStyle(
-            color: Colors.grey,
-            fontSize: 12,
-            fontWeight: FontWeight.w600,
-          ),
+        subtitle: Consumer<Overall>(
+          builder: (context, overall, child) {
+            final userInfo = overall.getUserInfo();
+            final numberOfCards = userInfo.getNumberOfPaymentMethods();
+            return Text(
+              '$numberOfCards Cards Linked',
+              style: const TextStyle(
+                color: Colors.grey,
+                fontSize: 12,
+                fontWeight: FontWeight.w600,
+              ),
+            );
+          },
         ),
         // Arrow
         trailing: const Icon(
@@ -402,7 +409,13 @@ class VaultAccountsTile extends StatelessWidget {
           size: 30,
           color: Colors.white,
         ),
-        onTap: () {},
+        // Inside PaymentMethodTile class in profile-main.dart
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => PaymentMethodPage()),
+          );
+        },
       ),
     );
   }
