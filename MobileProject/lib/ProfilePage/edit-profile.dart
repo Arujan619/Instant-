@@ -76,6 +76,16 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     }
                     return null;
                   },
+                  onSaved: (value) {
+                    if (value != null && value.isNotEmpty) {
+                      final names = value.split(' ');
+                      final firstName = names.isNotEmpty ? names[0] : '';
+                      final lastName = names.length > 1 ? names.sublist(1).join(' ') : '';
+                      final overall = Provider.of<Overall>(context, listen: false);
+                      overall.userInfo.setFirstName(firstName);
+                      overall.userInfo.setLastName(lastName);
+                    }
+                  },
                 ),
                 SizedBox(height: 16),
                 TextFormField(
@@ -88,13 +98,19 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     }
                     return null;
                   },
+                  onSaved: (value) {
+                    if (value != null && value.isNotEmpty) {
+                      final overall = Provider.of<Overall>(context, listen: false);
+                      overall.userInfo.setPhoneNumber(value);
+                    }
+                  },
                 ),
                 SizedBox(height: 16),
                 ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
+                      _formKey.currentState!.save(); // Save the form to trigger onSaved
                       // Save profile information
-                      // You can add your save logic here
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(content: Text('Profile updated')),
                       );
