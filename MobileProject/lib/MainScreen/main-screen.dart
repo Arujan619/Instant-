@@ -20,7 +20,7 @@ class _MainScreenState extends State<MainScreen> {
     end: Alignment.bottomRight,
   );
 
-  static const List<Widget> _widgetOptions = <Widget>[
+  static List<Widget> _widgetOptions = <Widget>[
     HomeMain(),
     WalletMain(),
     MetricsMain(),
