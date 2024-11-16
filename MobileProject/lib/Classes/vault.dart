@@ -127,4 +127,9 @@ class Vault {
   void incrementBalance(double amount) {
     balanceAmount += amount;
   }
+
+  // Decrease balance
+  void decreaseBalance(double amount) {
+    balanceAmount -= amount;
+  }
 }
