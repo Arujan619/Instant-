@@ -3,6 +3,7 @@ import 'payment_method.dart';
 
 class UserInfo {
   // Data members
+  int? id;
   Image profileImage;
   String firstName;
   String lastName;

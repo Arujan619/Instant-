@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'user_info.dart';
 import 'vault.dart';
+import '../dbHelper.dart';
 
 class Overall extends ChangeNotifier {
   // Data members
@@ -18,7 +19,9 @@ class Overall extends ChangeNotifier {
         currentMonthYear = '',
         currentDayMonthYear = '',
         currentBalance = 0.0,
-        currentProfit = 0.0;
+        currentProfit = 0.0{
+    _loadUserData();
+  }
 
   Overall.parameterized({
     required this.userInfo,
@@ -28,6 +31,26 @@ class Overall extends ChangeNotifier {
     required this.currentBalance,
     required this.currentProfit,
   });
+
+    // New methods for database integration
+  void _loadUserData() async {
+    final dbUser = await DatabaseHelper.instance.getUser();
+    if (dbUser != null) {
+      userInfo = dbUser;
+      notifyListeners();
+    }
+  }
+
+  void saveUserInfo() async {
+    await DatabaseHelper.instance.saveUser(userInfo);
+    notifyListeners();
+  }
+
+  void updateUserInfo(UserInfo newUserInfo) async {
+    userInfo = newUserInfo;
+    await DatabaseHelper.instance.updateUserInfo(userInfo);
+    notifyListeners();
+  }
 
   // Setters
   void setUserInfo(UserInfo userInfo) {

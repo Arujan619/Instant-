@@ -26,6 +26,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
       // Update the profile image in Overall
       final overall = Provider.of<Overall>(context, listen: false);
       overall.userInfo.setProfileImage(Image.file(File(image.path)));
+      overall.updateUserInfo(overall.userInfo); // Save changes to SQLite
     }
   }
 
@@ -111,9 +112,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
                     if (_formKey.currentState!.validate()) {
                       _formKey.currentState!.save(); // Save the form to trigger onSaved
                       // Save profile information
+                      final overall = Provider.of<Overall>(context, listen: false);
+                      overall.updateUserInfo(overall.userInfo);
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(content: Text('Profile updated')),
                       );
+                    setState((){});
+                    Navigator.pop(context, true);
                     }
                   },
                   child: Text('Save'),

@@ -191,6 +191,7 @@ class _ProfileMainState extends State<ProfileMain> {
                                               builder: (context) =>
                                                   EditProfilePage()),
                                         );
+                                        setState((){});
                                       },
                                       style: ElevatedButton.styleFrom(
                                         minimumSize: const Size(84, 20),
