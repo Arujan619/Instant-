@@ -6,6 +6,8 @@ import 'LandingPage/landing-main.dart';
 import 'HomePage/home-main.dart';
 import '../Authentication/widget-tree.dart';
 import '../Classes/overall.dart';
+import 'ProfilePage/profile-main.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'Notifications/noti_perms.dart';
 
@@ -33,6 +35,8 @@ void main() async {
   runApp(const MyApp());
 }
 
+
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -47,10 +51,25 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        // TODO: If user not logged in, show LandingPage, else show HomePage
-        // TODO: for now just show LandingPage
-        home: const LandingMain(),
-        //TODO: home: const WidgetTree(),
+        home: StreamBuilder<User?>(
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder: (context, snapshot) {
+
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Center(child: CircularProgressIndicator());
+            }
+
+            if (snapshot.hasError) {
+              return const Center(child: Text('Something went wrong!'));
+            }
+
+            if (snapshot.hasData) {
+              return const HomeMain();
+            }
+
+            return const LandingMain();
+          },
+        ),
       ),
     );
   }
