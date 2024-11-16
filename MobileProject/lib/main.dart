@@ -6,6 +6,8 @@ import 'LandingPage/landing-main.dart';
 import 'HomePage/home-main.dart';
 import '../Authentication/widget-tree.dart';
 import '../Classes/overall.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'Notifications/noti_perms.dart';
 
 /*
     Description:
@@ -27,6 +29,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await requestNotificationPermission();
   runApp(const MyApp());
 }
 
