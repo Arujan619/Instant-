@@ -116,4 +116,15 @@ class Vault {
   int getCardLinkedId() {
     return cardLinkedId;
   }
+
+  // Helper method
+  // Check if the vault is locked
+  bool getIsLocked() {
+    return isLocked;
+  }
+
+  // Increment balance
+  void incrementBalance(double amount) {
+    balanceAmount += amount;
+  }
 }

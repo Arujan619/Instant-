@@ -44,6 +44,7 @@ class _DepositPageState extends State<DepositPage> {
             key: _formKey,
             child: ListView(
               children: [
+                // DropdownButtonFormField for PaymentMethod
                 DropdownButtonFormField<PaymentMethod>(
                   decoration: InputDecoration(labelText: 'Select Payment Method'),
                   items: paymentMethods.map((PaymentMethod method) {
@@ -60,6 +61,8 @@ class _DepositPageState extends State<DepositPage> {
                   validator: (value) => value == null ? 'Please select a payment method' : null,
                 ),
                 SizedBox(height: 16),
+
+                // Amount to deposit
                 TextFormField(
                   controller: _amountController,
                   decoration: InputDecoration(labelText: 'Amount Desired (\$00.00)'),
@@ -72,6 +75,8 @@ class _DepositPageState extends State<DepositPage> {
                   },
                 ),
                 SizedBox(height: 16),
+
+                // DropdownButtonFormField for Vault
                 DropdownButtonFormField<Vault>(
                   decoration: InputDecoration(labelText: 'Select Vault'),
                   items: vaults.map((Vault vault) {
@@ -88,10 +93,20 @@ class _DepositPageState extends State<DepositPage> {
                   validator: (value) => value == null ? 'Please select a vault' : null,
                 ),
                 SizedBox(height: 16),
+
+                // Save button
                 ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      // Handle the deposit action here
+                      _formKey.currentState!.save(); // Save the form to trigger onSaved
+                      final double amount = double.parse(_amountController.text);
+                      final overall = Provider.of<Overall>(context, listen: false);
+
+                      if (_selectedVault != null) {
+                        _selectedVault!.incrementBalance(amount);
+                        overall.setListVaults(overall.getListVaults()); // Notify listeners
+                      }
+
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(content: Text('Deposit action handled')),
                       );
