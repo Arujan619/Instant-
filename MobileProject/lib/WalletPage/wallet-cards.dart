@@ -2,14 +2,40 @@ import 'package:flutter/material.dart';
 import 'wallet-main.dart'; // Import the constants from wallet-main.dart
 
 class VaultCardData {
-  VaultCardData({required this.gradient});
+  VaultCardData({
+    required this.gradient,
+    required this.name,
+    required this.daysRemaining,
+    required this.image,
+    required this.goalAmount,
+    required this.balanceAmount,
+  });
+
   final Gradient gradient;
+  final String name;
+  final int daysRemaining;
+  final Image image;
+  final double goalAmount;
+  final double balanceAmount;
 }
 
 class VaultCard extends StatelessWidget {
-  const VaultCard({super.key, required this.gradient});
+  const VaultCard({
+    super.key,
+    required this.gradient,
+    required this.name,
+    required this.daysRemaining,
+    required this.image,
+    required this.goalAmount,
+    required this.balanceAmount,
+  });
 
   final Gradient gradient;
+  final String name;
+  final int daysRemaining;
+  final Image image;
+  final double goalAmount;
+  final double balanceAmount;
 
   @override
   Widget build(BuildContext context) {
@@ -46,9 +72,9 @@ class VaultCard extends StatelessWidget {
             Positioned(
               top: 16,
               left: 16,
-              child: const Text(
-                'School Trip',
-                style: TextStyle(
+              child: Text(
+                name,
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 15,
                   fontWeight: FontWeight.w600,
@@ -60,9 +86,9 @@ class VaultCard extends StatelessWidget {
             Positioned(
               top: 40,
               left: 16,
-              child: const Text(
-                '38 Days Remaining',
-                style: TextStyle(
+              child: Text(
+                '$daysRemaining Days Remaining',
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 13,
                   fontFamily: 'Poppins',
@@ -81,12 +107,7 @@ class VaultCard extends StatelessWidget {
                   shape: BoxShape.circle,
                 ),
                 child: Center(
-                  child: Image(
-                    image: AssetImage('assets/temporary/vault_image.png'), //TODO
-                    width: 81,
-                    height: 81,
-                    fit: BoxFit.cover,
-                  ),
+                  child: image,
                 ),
               ),
             ),
@@ -96,8 +117,8 @@ class VaultCard extends StatelessWidget {
               left: 120,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text(
+                children: [
+                  const Text(
                     'Goal',
                     style: TextStyle(
                       color: Colors.white,
@@ -106,8 +127,8 @@ class VaultCard extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    '\$5000',
-                    style: TextStyle(
+                    '\$$goalAmount',
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 18,
                       fontWeight: FontWeight.w600,
@@ -123,8 +144,8 @@ class VaultCard extends StatelessWidget {
               left: 220,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Text(
+                children: [
+                  const Text(
                     'Balance',
                     style: TextStyle(
                       color: Colors.white,
@@ -133,8 +154,8 @@ class VaultCard extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    '\$2000',
-                    style: TextStyle(
+                    '\$$balanceAmount',
+                    style: const TextStyle(
                       color: Colors.white,
                       fontSize: 18,
                       fontWeight: FontWeight.w600,

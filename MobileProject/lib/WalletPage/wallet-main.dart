@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../Classes/overall.dart';
+import '../Classes/vault.dart';
 import 'wallet-cards.dart';
+import 'add-vault.dart';
 
 /*
     Description:
@@ -8,7 +12,6 @@ import 'wallet-cards.dart';
     - Allows to create new vault
     - Allows to delete vault
     - Allows to edit vault
-
  */
 
 /*
@@ -16,7 +19,6 @@ import 'wallet-cards.dart';
     - UI Layout
     - SnackBar Navigation (Wallet, Metrics, Profile)
     ...
-
  */
 
 const double kCardHeight = 225;
@@ -37,110 +39,57 @@ class WalletMain extends StatefulWidget {
 
 class _WalletMainState extends State<WalletMain> {
   int? selectedCardIndex = 0;
-
-  final List<VaultCardData> cardsData = [
-    VaultCardData(
-      gradient: LinearGradient(
-        colors: [Color(0xFFEF07C8), Color(0xFF111735)],
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-      ),
-    ),
-    VaultCardData(
-      gradient: LinearGradient(
-        colors: [Colors.indigo, Color(0xFF111735)],
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-      ),
-    ),
-    VaultCardData(
-      gradient: LinearGradient(
-        colors: [Color(0xFFE10A3C), Color(0xFF06195A)],
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-      ),
-    ),
-    VaultCardData(
-      gradient: LinearGradient(
-        colors: [Color(0xFF111735), Color(0xFF0B30EA)],
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-      ),
-    ),
-    VaultCardData(
-      gradient: LinearGradient(
-        colors: [Color(0xFF09E6FA), Color(0xFF0625E1)],
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-      ),
-    ),
-  ];
-
-  late final List<VaultCard> vaultCards;
-
-  @override
-  void initState() {
-    super.initState();
-    vaultCards = cardsData
-        .map((data) => VaultCard(gradient: data.gradient))
-        .toList();
-  }
-
-  int toUnselectedCardPositionIndex(int indexInAllList) {
-    if (selectedCardIndex != null) {
-      if (indexInAllList < selectedCardIndex!) {
-        return indexInAllList;
-      } else {
-        return indexInAllList - 1;
-      }
-    } else {
-      throw 'Wrong usage';
-    }
-  }
-
-  double _getCardTopPositioned(int index, bool isSelected) {
-    if (selectedCardIndex != null) {
-      if (isSelected) {
-        return kSpaceBetweenCard;
-      } else {
-        return kSpaceUnselectedCardToTop +
-            toUnselectedCardPositionIndex(index) * kSpaceBetweenUnselectCard;
-      }
-    } else {
-      return kSpaceBetweenCard + index * kCardHeight + index * kSpaceBetweenCard;
-    }
-  }
-
-  double _getCardScale(int index, bool isSelected) {
-    if (selectedCardIndex != null) {
-      if (isSelected) {
-        return 1.0;
-      } else {
-        int totalUnselectCard = vaultCards.length - 1;
-        return 1.0 -
-            (totalUnselectCard - toUnselectedCardPositionIndex(index) - 1) *
-                0.05;
-      }
-    } else {
-      return 1.0;
-    }
-  }
-
-  double totalHeightTotalCard() {
-    if (selectedCardIndex == null) {
-      final totalCard = vaultCards.length;
-      return kSpaceBetweenCard * (totalCard + 1) + kCardHeight * totalCard;
-    } else {
-      return kSpaceUnselectedCardToTop +
-          kCardHeight +
-          (vaultCards.length - 2) * kSpaceBetweenUnselectCard +
-          kSpaceBetweenCard;
-    }
-  }
+  late List<VaultCard> vaultCards; // Define vaultCards as a class member
 
   @override
   Widget build(BuildContext context) {
-    final mediaQuery = MediaQuery.of(context);
+    final overall = Provider.of<Overall>(context);
+    final List<VaultCardData> cardsData = overall.getListVaults().map((vault) {
+      return VaultCardData(
+        gradient: vault.gradient,
+        name: vault.name,
+        daysRemaining: vault.daysRemaining,
+        image: vault.image,
+        goalAmount: vault.goalAmount,
+        balanceAmount: vault.balanceAmount,
+      );
+    }).toList();
+
+    cardsData.addAll([
+      VaultCardData(
+        gradient: LinearGradient(
+          colors: [Color(0xFFEF07C8), Color(0xFF111735)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        name: 'Vault 1',
+        daysRemaining: 30,
+        image: Image.asset('assets/vault1.png'),
+        goalAmount: 1000.0,
+        balanceAmount: 500.0,
+      ),
+      VaultCardData(
+        gradient: LinearGradient(
+          colors: [Colors.indigo, Color(0xFF111735)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        name: 'Vault 2',
+        daysRemaining: 60,
+        image: Image.asset('assets/vault2.png'),
+        goalAmount: 2000.0,
+        balanceAmount: 1500.0,
+      ),
+    ]);
+
+    vaultCards = cardsData.map((data) => VaultCard(
+      gradient: data.gradient,
+      name: data.name,
+      daysRemaining: data.daysRemaining,
+      image: data.image,
+      goalAmount: data.goalAmount,
+      balanceAmount: data.balanceAmount,
+    )).toList();
 
     return Container(
       decoration: const BoxDecoration(
@@ -190,33 +139,41 @@ class _WalletMainState extends State<WalletMain> {
             Positioned(
               top: 70,
               left: 16,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Container(
-                    width: 45,
-                    height: 45,
-                    decoration: BoxDecoration(
-                      color: Colors.transparent,
-                      shape: BoxShape.circle,
-                      border: Border.all(color: Colors.white, width: 1),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => AddVaultPage()),
+                  );
+                },
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                      width: 45,
+                      height: 45,
+                      decoration: BoxDecoration(
+                        color: Colors.transparent,
+                        shape: BoxShape.circle,
+                        border: Border.all(color: Colors.white, width: 1),
+                      ),
+                      child: const Icon(
+                        Icons.add,
+                        color: Colors.white,
+                        size: 30,
+                      ),
                     ),
-                    child: const Icon(
-                      Icons.add,
-                      color: Colors.white,
-                      size: 30,
+                    const SizedBox(width: 8),
+                    const Text(
+                      'ADD Vault',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 15,
+                        fontFamily: 'Poppins',
+                      ),
                     ),
-                  ),
-                  const SizedBox(width: 8),
-                  const Text(
-                    'ADD Account',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 15,
-                      fontFamily: 'Poppins',
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
 
@@ -232,8 +189,8 @@ class _WalletMainState extends State<WalletMain> {
                     children: [
                       AnimatedContainer(
                         duration: kAnimationDuration,
-                        height: totalHeightTotalCard(),
-                        width: mediaQuery.size.width,
+                        height: totalHeightTotalCard(vaultCards.length),
+                        width: MediaQuery.of(context).size.width,
                       ),
                       for (int i = 0; i < vaultCards.length; i++)
                         AnimatedPositioned(
@@ -287,5 +244,56 @@ class _WalletMainState extends State<WalletMain> {
         ),
       ),
     );
+  }
+
+  double totalHeightTotalCard(int cardCount) {
+    if (selectedCardIndex == null) {
+      return kSpaceBetweenCard * (cardCount + 1) + kCardHeight * cardCount;
+    } else {
+      return kSpaceUnselectedCardToTop +
+          kCardHeight +
+          (cardCount - 2) * kSpaceBetweenUnselectCard +
+          kSpaceBetweenCard;
+    }
+  }
+
+  double _getCardTopPositioned(int index, bool isSelected) {
+    if (selectedCardIndex != null) {
+      if (isSelected) {
+        return kSpaceBetweenCard;
+      } else {
+        return kSpaceUnselectedCardToTop +
+            toUnselectedCardPositionIndex(index) * kSpaceBetweenUnselectCard;
+      }
+    } else {
+      return kSpaceBetweenCard + index * kCardHeight + index * kSpaceBetweenCard;
+    }
+  }
+
+  double _getCardScale(int index, bool isSelected) {
+    if (selectedCardIndex != null) {
+      if (isSelected) {
+        return 1.0;
+      } else {
+        int totalUnselectCard = vaultCards.length - 1;
+        return 1.0 -
+            (totalUnselectCard - toUnselectedCardPositionIndex(index) - 1) *
+                0.05;
+      }
+    } else {
+      return 1.0;
+    }
+  }
+
+  int toUnselectedCardPositionIndex(int indexInAllList) {
+    if (selectedCardIndex != null) {
+      if (indexInAllList < selectedCardIndex!) {
+        return indexInAllList;
+      } else {
+        return indexInAllList - 1;
+      }
+    } else {
+      throw 'Wrong usage';
+    }
   }
 }

@@ -91,7 +91,15 @@ class _WithdrawPageState extends State<WithdrawPage> {
                 ElevatedButton(
                   onPressed: () {
                     if (_formKey.currentState!.validate()) {
-                      // Handle the withdraw action here
+                      _formKey.currentState!.save(); // Save the form to trigger onSaved
+                      final double amount = double.parse(_amountController.text);
+                      final overall = Provider.of<Overall>(context, listen: false);
+
+                      if (_selectedVault != null) {
+                        _selectedVault!.decreaseBalance(amount);
+                        overall.setListVaults(overall.getListVaults()); // Notify listeners
+                      }
+
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(content: Text('Withdraw action handled')),
                       );

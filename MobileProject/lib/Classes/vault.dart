@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 
 class Vault {
@@ -10,28 +11,49 @@ class Vault {
   double balanceAmount;
   int cardLinkedId;
   bool isLocked;
+  LinearGradient gradient;
 
   // Constructors
   Vault()
       : name = '',
-        id = 0,
-        image = Image.asset('assets/default_vault.png'),
+        id = DateTime.now().millisecondsSinceEpoch,
+        image = Image.asset('assets/profile_picture.png'),
         daysRemaining = 0,
         goalAmount = 0.0,
         balanceAmount = 0.0,
         cardLinkedId = 0,
-        isLocked = false;
+        isLocked = false,
+        gradient = LinearGradient(
+          colors: [_generateRandomColor(), Color(0xFF111735)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        );
 
   Vault.parameterized({
     required this.name,
-    required this.id,
     required this.image,
     required this.daysRemaining,
     required this.goalAmount,
     required this.balanceAmount,
     required this.cardLinkedId,
     required this.isLocked,
-  });
+  })  : id = DateTime.now().millisecondsSinceEpoch,
+        gradient = LinearGradient(
+          colors: [_generateRandomColor(), Color(0xFF111735)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        );
+
+  // Method to generate a random color
+  static Color _generateRandomColor() {
+    Random random = Random();
+    return Color.fromARGB(
+      255,
+      random.nextInt(256),
+      random.nextInt(256),
+      random.nextInt(256),
+    );
+  }
 
   // Setters
   void setName(String name) {
@@ -93,5 +115,21 @@ class Vault {
 
   int getCardLinkedId() {
     return cardLinkedId;
+  }
+
+  // Helper method
+  // Check if the vault is locked
+  bool getIsLocked() {
+    return isLocked;
+  }
+
+  // Increment balance
+  void incrementBalance(double amount) {
+    balanceAmount += amount;
+  }
+
+  // Decrease balance
+  void decreaseBalance(double amount) {
+    balanceAmount -= amount;
   }
 }
