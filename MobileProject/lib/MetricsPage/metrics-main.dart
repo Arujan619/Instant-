@@ -36,6 +36,7 @@ class MetricsMainState extends State<MetricsMain>{
     daysRemaining: 100, goalAmount: 500, balanceAmount: 100, cardLinkedId: 1234, isLocked: true
   );
 
+  //Change the way we generate this list of currencies, we can grab every currency available from the api 
   final List<String> currencies = [ "USD", "EUR", "GBP", "JPY", "CAD", "AUD", "CHF", "CNY", "INR", "BRL", 
     "ZAR", "RUB", "KRW", "SGD", "MYR"
   ]; 
