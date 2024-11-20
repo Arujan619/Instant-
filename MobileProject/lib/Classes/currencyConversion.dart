@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'vault.dart';
@@ -23,30 +22,5 @@ class currencyConversion {
     }
 
     return vault;
-  }
-}
-
-void main() async{
-
-  currencyConversion converter = currencyConversion();
-
-  Vault testVault = Vault.parameterized(
-    name: 'Vacation Fund',
-    image: Image.asset('assets/vacation_image.png'),
-    daysRemaining: 30,
-    goalAmount: 2000.0,
-    balanceAmount: 500.0,
-    cardLinkedId: 1234,
-    isLocked: false,
-  );
-
-  print('Original Vault: $testVault');
-
-  // Test CurrencyService
-  try {
-    var convertedVault = await converter.convert(testVault, 'CAD', 'USD');
-    print('Converted Vault: $convertedVault');
-  } catch (e) {
-    print('Error: $e');
   }
 }
