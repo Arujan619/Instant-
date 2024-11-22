@@ -4,7 +4,7 @@ class Transaction {
   // Data members
   String vaultName;
   int vaultId;
-  Image vaultImage;
+  // Image vaultImage;
   double amount;
   String transactionType;
   DateTime transactionDate;
@@ -14,7 +14,7 @@ class Transaction {
   Transaction()
       : vaultName = '',
         vaultId = 0,
-        vaultImage = Image.asset('assets/default_vault.png'),
+        // vaultImage = Image.asset('assets/default_vault.png'),
         amount = 0.0,
         transactionType = '',
         transactionDate = DateTime.now(),
@@ -23,7 +23,7 @@ class Transaction {
   Transaction.parameterized({
     required this.vaultName,
     required this.vaultId,
-    required this.vaultImage,
+    // required this.vaultImage,
     required this.amount,
     required this.transactionType,
     required this.transactionDate,
@@ -40,9 +40,9 @@ class Transaction {
     this.vaultId = vaultId;
   }
 
-  void setVaultImage(Image vaultImage) {
-    this.vaultImage = vaultImage;
-  }
+  // void setVaultImage(Image vaultImage) {
+  //   this.vaultImage = vaultImage;
+  // }
 
   void setAmount(double amount) {
     this.amount = amount;
@@ -69,9 +69,9 @@ class Transaction {
     return vaultId;
   }
 
-  Image getVaultImage() {
-    return vaultImage;
-  }
+  // Image getVaultImage() {
+  //   return vaultImage;
+  // }
 
   double getAmount() {
     return amount;

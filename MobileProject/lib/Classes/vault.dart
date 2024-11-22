@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'transaction.dart';
 
 class Vault {
   // Data members
@@ -11,8 +12,8 @@ class Vault {
   double balanceAmount;
   int cardLinkedId;
   bool isLocked;
+  List <Transaction> transactions;
   LinearGradient gradient;
-
   // Constructors
   Vault()
       : name = '',
@@ -27,7 +28,10 @@ class Vault {
           colors: [_generateRandomColor(), Color(0xFF111735)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-        );
+        ),
+        transactions = []{
+      initTransaction();
+    }
 
   Vault.parameterized({
     required this.name,
@@ -42,7 +46,24 @@ class Vault {
           colors: [_generateRandomColor(), Color(0xFF111735)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-        );
+        ),
+        transactions = []{
+      initTransaction();
+    }
+
+  void initTransaction(){
+    if(balanceAmount>0){
+      transactions.add(Transaction.parameterized(
+        vaultName: name, 
+        vaultId: id,
+        amount: balanceAmount,
+        transactionType: "Deposit",
+        transactionDate: DateTime.now(),
+        transactionTime:  '${DateTime.now().hour}:${DateTime.now().minute}:${DateTime.now().second}'
+        )
+      );
+    }
+  }
 
   // Method to generate a random color
   static Color _generateRandomColor() {
@@ -123,6 +144,13 @@ class Vault {
     return isLocked;
   }
 
+  List getTransactions(){
+    return transactions;
+  }
+
+  void addTransaction(Transaction transaction){
+    transactions.add(transaction);
+  }
   // Increment balance
   void incrementBalance(double amount) {
     balanceAmount += amount;

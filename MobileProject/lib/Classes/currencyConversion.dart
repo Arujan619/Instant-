@@ -2,7 +2,9 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'vault.dart';
 
+
 class CurrencyConversion {
+  //can change to apiBaseURL + personal key near submission time, 'rates' becomes 'conversion_rates'
   final apiBaseUrl = 'https://api.exchangerate-api.com/v4/latest';
 
   //Could change the type of this function to person(overall) later
