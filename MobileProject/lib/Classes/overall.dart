@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'user_info.dart';
 import 'vault.dart';
 import '../dbHelper.dart';
+import '../Classes/transaction.dart';
 
 class Overall extends ChangeNotifier {
   // Data members
@@ -11,7 +12,7 @@ class Overall extends ChangeNotifier {
   String currentDayMonthYear;
   double currentBalance;
   double currentProfit;
-
+  List<Transaction> transactions;
   // Constructor
   Overall()
       : userInfo = UserInfo(),
@@ -19,8 +20,9 @@ class Overall extends ChangeNotifier {
         currentMonthYear = '',
         currentDayMonthYear = '',
         currentBalance = 0.0,
+        transactions = [],
         currentProfit = 0.0{
-    _loadUserData();
+    //  _loadUserData();
   }
 
   Overall.parameterized({
@@ -30,6 +32,7 @@ class Overall extends ChangeNotifier {
     required this.currentDayMonthYear,
     required this.currentBalance,
     required this.currentProfit,
+    required this.transactions
   });
 
     // New methods for database integration
@@ -38,6 +41,23 @@ class Overall extends ChangeNotifier {
     if (dbUser != null) {
       userInfo = dbUser;
       notifyListeners();
+    }
+  }
+    
+  void addTransaction(Transaction transaction){
+    transactions.add(transaction);
+    setBalance(transaction);
+  }
+
+  void setBalance(Transaction transaction){
+    if (transaction.transactionType == "Deposit"){
+      currentBalance = currentBalance + transaction.getAmount();
+    }
+    else{
+      currentBalance = currentBalance - transaction.getAmount();
+      if (currentBalance < 0){
+        currentBalance = 0;
+      }
     }
   }
 
@@ -63,6 +83,15 @@ class Overall extends ChangeNotifier {
     notifyListeners();
   }
 
+  void addVault(Vault vault) {
+    listVaults.add(vault);
+    notifyListeners();
+  }
+
+  void removeVault(Vault vault) {
+    listVaults.remove(vault);
+    notifyListeners();
+  }
   void setCurrentMonthYear() {
     DateTime now = DateTime.now();
     String month = _getMonthName(now.month);
@@ -97,6 +126,10 @@ class Overall extends ChangeNotifier {
 
   List<Vault> getListVaults() {
     return listVaults;
+  }
+
+  List<Transaction> getTransactions(){
+    return transactions;
   }
 
   double getCurrentBalance() {

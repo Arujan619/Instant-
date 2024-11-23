@@ -4,6 +4,8 @@ import 'overall-chart.dart';
 import 'vaults-chart.dart';
 import '../Classes/currencyConversion.dart';
 import '../Classes/vault.dart';
+import '../Classes/overall.dart';
+import '../Classes/transaction.dart';
 
 /*
     Description:
@@ -21,7 +23,11 @@ import '../Classes/vault.dart';
  */
 
 class MetricsMain extends StatefulWidget {
-  const MetricsMain({super.key});
+  // final overall = Privder.of<Overall>(context); //Access Overall instance
+  // Uncommment the below 2 once overall is instantiated once a  user signs in and is passed to each page
+  // final Overall overall;
+  // const MetricsMain({super.key, required this.overall});
+  MetricsMain({super.key});
 
   @override
   MetricsMainState createState() => MetricsMainState();
@@ -31,10 +37,43 @@ class MetricsMainState extends State<MetricsMain>{
   String currentCurrency = "CAD";
   String? selectedCurrency;
   CurrencyConversion currencyConverter = CurrencyConversion();
+  Overall overall = Overall();
+  late List<Vault> vaults;
+  @override
+  void initState(){
+    super.initState();
+    //Set up vault and transactions for testing, will remove later
+    Vault vault = Vault.parameterized(
+      name: "TestVault", 
+      image: Image.asset('assets/profile_picture.png'), 
+      daysRemaining: 200, 
+      goalAmount: 500, 
+      balanceAmount: 100, 
+      cardLinkedId: 0, 
+      isLocked: false
+    );
+    print(vault.getBalanceAmount());
+    Transaction transaction = Transaction.parameterized(vaultName: "TestVault", vaultId: vault.getId(), amount: 800, transactionType: "Deposit", transactionDate: DateTime.now(), transactionTime: '${DateTime.now().hour}:${DateTime.now().minute}:${DateTime.now().second}');
+    vault.addTransaction(transaction);
+    overall.addTransaction(transaction);
+    print(vault.getBalanceAmount());
+    Transaction transaction2 = Transaction.parameterized(vaultName: "TestVault", vaultId: vault.getId(), amount: 50, transactionType: "Withdraw", transactionDate: DateTime.now(), transactionTime: '${DateTime.now().hour}:${DateTime.now().minute}:${DateTime.now().second}');
+    vault.addTransaction(transaction2);
+    overall.addTransaction(transaction2);
 
-  Vault vault = Vault.parameterized(name: "school", image: Image.asset('assets/profile_picture.png'), 
-    daysRemaining: 100, goalAmount: 500, balanceAmount: 100, cardLinkedId: 1234, isLocked: true
-  );
+    overall.addVault(vault);
+
+    vaults = overall.getListVaults();
+  }  
+
+  //the overall chart should take every transaction ever and display that
+
+  //the vaults chart will look at transactions in each vault account
+
+
+  // Vault vault = Vault.parameterized(name: "school", image: Image.asset('assets/profile_picture.png'), 
+  //   daysRemaining: 100, goalAmount: 500, balanceAmount: 100, cardLinkedId: 1234, isLocked: true
+  // );
 
   //Change the way we generate this list of currencies, we can grab every currency available from the api 
   final List<String> currencies = [ "USD", "EUR", "GBP", "JPY", "CAD", "AUD", "CHF", "CNY", "INR", "BRL", 
@@ -68,7 +107,7 @@ class MetricsMainState extends State<MetricsMain>{
     );
 
     currentCurrency = selectedCurrency!;
-    await currencyConverter.convert(vault, currentCurrency, selectedCurrency!);
+    await currencyConverter.convert(vaults[0], currentCurrency, selectedCurrency!);
     setState((){});
   }
 
@@ -96,7 +135,7 @@ class MetricsMainState extends State<MetricsMain>{
                   // Floating widget card for Line Chart
                   buildFloatingCard(
                     title: "Your earnings",
-                    child: buildAreaChart(sampleSavingsData),
+                    child: buildAreaChart(overall.getTransactions()),
                   ),
                   const SizedBox(height: 20),
                   // Floating widget card for Vaults Chart
@@ -174,7 +213,8 @@ class MetricsMainState extends State<MetricsMain>{
                     //Remove below box once charts are implemented properly because then we can see the charts change on setState
                     const SizedBox(width: 8),
                     Text(
-                      vault.getBalanceAmount().toString(),
+                      overall.getCurrentBalance().toString(),
+                      // vaults[0].getBalanceAmount().toString(),
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 15,

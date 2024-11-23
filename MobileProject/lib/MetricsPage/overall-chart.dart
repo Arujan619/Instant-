@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
+import '../Classes/overall.dart';
+import '../Classes/vault.dart';
+import '../Classes/transaction.dart';
 
 // Temporary class to help create graph with data points
 class SavingsData {
@@ -70,12 +73,30 @@ Widget buildFloatingCard({required String title, required Widget child}) {
   );
 }
 
-// Line Chart
-Widget buildAreaChart(List<SavingsData> data) {
+List<Transaction> buildCumulativeTotal(List<Transaction> transactions){
+  double total = 0;
+
+  for (var item in transactions){
+    if(item.transactionType == "Deposit"){
+      total = total + item.getAmount();
+    }
+    else{
+      total = total - item.getAmount();
+    }
+    item.setAmount(total);
+  }
+
+  return transactions;
+}
+
+Widget buildAreaChart(List<Transaction> transactions) {
+  transactions = buildCumulativeTotal(transactions);
+  // print(transactions.map((t) => '${t.getTransactionDate()} - ${t.getAmount()}').toList());
+
   return SfCartesianChart(
     plotAreaBorderColor: Colors.transparent,
-    primaryXAxis: DateTimeAxis(isVisible: false),
-    primaryYAxis: NumericAxis(isVisible: false),
+    primaryXAxis: DateTimeAxis(isVisible: true),
+    primaryYAxis: NumericAxis(isVisible: true),
     trackballBehavior: TrackballBehavior(
       enable: true,
       activationMode: ActivationMode.singleTap,
@@ -85,10 +106,10 @@ Widget buildAreaChart(List<SavingsData> data) {
       ),
     ),
     series: <CartesianSeries>[
-      AreaSeries<SavingsData, DateTime>(
-        dataSource: data,
-        xValueMapper: (SavingsData data, _) => data.date,
-        yValueMapper: (SavingsData data, _) => data.amount,
+      AreaSeries<Transaction, DateTime>(
+        dataSource: transactions,
+        xValueMapper: (Transaction transaction, _) => transaction.getTransactionDate(),
+        yValueMapper: (Transaction transaction, _) => transaction.getAmount(),
         borderColor: const Color(0xFFF6386B),
         borderWidth: 2,
         gradient: const LinearGradient(

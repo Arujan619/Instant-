@@ -25,14 +25,15 @@ class Vault {
         cardLinkedId = 0,
         isLocked = false,
         gradient = LinearGradient(
-          colors: [_generateRandomColor(), Color(0xFF111735)],
+          colors: [_generateRandomColor(), const Color(0xFF111735)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
-        transactions = []{
-      initTransaction();
-    }
+        transactions = [] {
+    initTransaction();
+  }
 
+  // Parameterized Constructor
   Vault.parameterized({
     required this.name,
     required this.image,
@@ -43,13 +44,13 @@ class Vault {
     required this.isLocked,
   })  : id = DateTime.now().millisecondsSinceEpoch,
         gradient = LinearGradient(
-          colors: [_generateRandomColor(), Color(0xFF111735)],
+          colors: [_generateRandomColor(), const Color(0xFF111735)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
-        transactions = []{
-      initTransaction();
-    }
+        transactions = [] {
+    initTransaction();
+  }
 
   void initTransaction(){
     if(balanceAmount>0){
@@ -150,8 +151,22 @@ class Vault {
 
   void addTransaction(Transaction transaction){
     transactions.add(transaction);
+    setBalance(transaction);
   }
-  // Increment balance
+
+  void setBalance(Transaction transaction){
+    if (transaction.transactionType == "Deposit"){
+      balanceAmount = balanceAmount + transaction.getAmount();
+    }
+    else{
+      balanceAmount = balanceAmount - transaction.getAmount();
+      if (balanceAmount < 0){
+        balanceAmount = 0;
+      }
+    }
+  }
+
+  // // Increment balance
   void incrementBalance(double amount) {
     balanceAmount += amount;
   }
