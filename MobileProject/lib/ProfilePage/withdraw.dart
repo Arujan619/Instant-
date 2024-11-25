@@ -17,7 +17,7 @@ class _WithdrawPageState extends State<WithdrawPage> {
 
   @override
   Widget build(BuildContext context) {
-    final overall = Provider.of<Overall>(context);
+    final overall = Provider.of<Overall>(context); 
     final vaults = overall.getListVaults();
     final paymentMethods = overall.userInfo.getPaymentMethods();
 
@@ -25,7 +25,7 @@ class _WithdrawPageState extends State<WithdrawPage> {
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
-          onPressed: () {
+          onPressed: () { 
             Navigator.pop(context);
           },
         ),

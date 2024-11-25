@@ -4,31 +4,36 @@ class Transaction {
   // Data members
   String vaultName;
   int vaultId;
-  Image vaultImage;
+  // Image vaultImage;
   double amount;
+  double originalAmount;
   String transactionType;
   DateTime transactionDate;
   String transactionTime;
+  String currency;
 
   // Constructor
   Transaction()
       : vaultName = '',
         vaultId = 0,
-        vaultImage = Image.asset('assets/default_vault.png'),
+        // vaultImage = Image.asset('assets/default_vault.png'),
         amount = 0.0,
+        originalAmount = 0.0,
         transactionType = '',
         transactionDate = DateTime.now(),
+        currency = "CAD",
         transactionTime = '';
 
   Transaction.parameterized({
     required this.vaultName,
     required this.vaultId,
-    required this.vaultImage,
-    required this.amount,
+    // required this.vaultImage,
+    required this.originalAmount,
     required this.transactionType,
     required this.transactionDate,
     required this.transactionTime,
-  });
+    this.currency = "CAD",
+  }) : amount = originalAmount;
 
 
   // Setters
@@ -40,9 +45,9 @@ class Transaction {
     this.vaultId = vaultId;
   }
 
-  void setVaultImage(Image vaultImage) {
-    this.vaultImage = vaultImage;
-  }
+  // void setVaultImage(Image vaultImage) {
+  //   this.vaultImage = vaultImage;
+  // }
 
   void setAmount(double amount) {
     this.amount = amount;
@@ -69,9 +74,9 @@ class Transaction {
     return vaultId;
   }
 
-  Image getVaultImage() {
-    return vaultImage;
-  }
+  // Image getVaultImage() {
+  //   return vaultImage;
+  // }
 
   double getAmount() {
     return amount;
@@ -87,5 +92,16 @@ class Transaction {
 
   String getTransactionTime() {
     return transactionTime;
+  }
+
+  double getOriginalAmount(){
+    return originalAmount;
+  }
+  // void resetToOriginalAmount() {
+  //   amount = originalAmount;
+  // }
+
+  void updateAmount(double exchangeRate){
+    amount = originalAmount * exchangeRate;
   }
 }

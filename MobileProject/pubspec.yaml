@@ -30,7 +30,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  #Local db
+  # Local db
   sqflite: ^2.2.7  
   path: ^1.8.0 
   # Charts

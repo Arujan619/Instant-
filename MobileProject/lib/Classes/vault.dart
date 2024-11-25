@@ -1,5 +1,7 @@
 import 'dart:math';
 import 'package:flutter/material.dart';
+import 'transaction.dart';
+import 'overall.dart';
 
 class Vault {
   // Data members
@@ -8,11 +10,13 @@ class Vault {
   Image image;
   int daysRemaining;
   double goalAmount;
+  double originalAmount;
   double balanceAmount;
   int cardLinkedId;
   bool isLocked;
+  String currency;
+  List <Transaction> transactions;
   LinearGradient gradient;
-
   // Constructors
   Vault()
       : name = '',
@@ -21,28 +25,54 @@ class Vault {
         daysRemaining = 0,
         goalAmount = 0.0,
         balanceAmount = 0.0,
+        originalAmount = 0.0,
         cardLinkedId = 0,
         isLocked = false,
+        transactions = [],
+        currency = "CAD",
         gradient = LinearGradient(
-          colors: [_generateRandomColor(), Color(0xFF111735)],
+          colors: [_generateRandomColor(), const Color(0xFF111735)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-        );
+        );//,
+  //       transactions = [] {
+  //   initTransaction();
+  // }
 
+  // Parameterized Constructor
   Vault.parameterized({
     required this.name,
     required this.image,
     required this.daysRemaining,
     required this.goalAmount,
-    required this.balanceAmount,
+    required this.originalAmount,
     required this.cardLinkedId,
+    this.currency = "CAD",
+    required Overall overall,
     required this.isLocked,
   })  : id = DateTime.now().millisecondsSinceEpoch,
         gradient = LinearGradient(
-          colors: [_generateRandomColor(), Color(0xFF111735)],
+          colors: [_generateRandomColor(), const Color(0xFF111735)],
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-        );
+        ),
+        balanceAmount = originalAmount,
+        transactions = [] {
+    //initialize first transaction for vault and add transaction to overall
+    if(balanceAmount>0){
+      Transaction initialTransaction = Transaction.parameterized(
+        vaultName: name, 
+        vaultId: id,
+        originalAmount: balanceAmount,
+        transactionType: "Deposit",
+        transactionDate: DateTime.now(),
+        transactionTime:  '${DateTime.now().hour}:${DateTime.now().minute}:${DateTime.now().second}'
+      );
+      transactions.add(initialTransaction);  
+      overall.addTransaction(initialTransaction);
+    }
+  }
+
 
   // Method to generate a random color
   static Color _generateRandomColor() {
@@ -88,6 +118,28 @@ class Vault {
     this.isLocked = isLocked;
   }
 
+  void addTransaction(Transaction transaction){
+    transactions.add(transaction);
+    incrementOriginalBalance(transaction);
+  }
+
+  void setOriginalAmount(double amount){
+    originalAmount = amount;
+  }
+
+  void incrementOriginalBalance(Transaction transaction){
+    if (transaction.transactionType == "Deposit"){
+      originalAmount = originalAmount + transaction.getAmount();
+    }
+    else{
+      originalAmount = originalAmount - transaction.getAmount();
+      if (originalAmount < 0){
+        originalAmount = 0;
+      }
+    }
+    balanceAmount = originalAmount;
+  }
+  //NEED TO HANDLE CURRENT BALANCE STILL
   // Getters
   String getName() {
     return name;
@@ -113,6 +165,10 @@ class Vault {
     return balanceAmount;
   }
 
+  double getOriginalAmount(){
+    return originalAmount;
+  }
+
   int getCardLinkedId() {
     return cardLinkedId;
   }
@@ -123,7 +179,11 @@ class Vault {
     return isLocked;
   }
 
-  // Increment balance
+  List getTransactions(){
+    return transactions;
+  }
+
+  // // Increment balance
   void incrementBalance(double amount) {
     balanceAmount += amount;
   }
@@ -131,5 +191,15 @@ class Vault {
   // Decrease balance
   void decreaseBalance(double amount) {
     balanceAmount -= amount;
+  }
+
+  void updateCurrency(String newCurrency, double exchangeRate){
+    currency = newCurrency;
+    balanceAmount = balanceAmount * exchangeRate;
+    // goalAmount = goalAmount * exchangeRate;
+
+    for(var transaction in transactions){
+      transaction.updateAmount(exchangeRate);
+    }
   }
 }

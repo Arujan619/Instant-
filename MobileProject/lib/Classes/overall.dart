@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'user_info.dart';
 import 'vault.dart';
 import '../dbHelper.dart';
+import '../Classes/transaction.dart';
 
 class Overall extends ChangeNotifier {
   // Data members
@@ -9,9 +10,11 @@ class Overall extends ChangeNotifier {
   List<Vault> listVaults;
   String currentMonthYear;
   String currentDayMonthYear;
+  double originalBalance;
   double currentBalance;
   double currentProfit;
-
+  List<Transaction> transactions;
+  String currency = "CAD";
   // Constructor
   Overall()
       : userInfo = UserInfo(),
@@ -19,8 +22,10 @@ class Overall extends ChangeNotifier {
         currentMonthYear = '',
         currentDayMonthYear = '',
         currentBalance = 0.0,
+        originalBalance = 0.0,
+        transactions = [],
         currentProfit = 0.0{
-    _loadUserData();
+    //  _loadUserData();
   }
 
   Overall.parameterized({
@@ -28,9 +33,10 @@ class Overall extends ChangeNotifier {
     required this.listVaults,
     required this.currentMonthYear,
     required this.currentDayMonthYear,
-    required this.currentBalance,
+    required this.originalBalance,
     required this.currentProfit,
-  });
+    required this.transactions
+  }) : currentBalance = originalBalance;
 
     // New methods for database integration
   void _loadUserData() async {
@@ -39,6 +45,11 @@ class Overall extends ChangeNotifier {
       userInfo = dbUser;
       notifyListeners();
     }
+  }
+    
+  void setCurrency(String newCurrency){
+    currency = newCurrency;
+    notifyListeners();
   }
 
   void saveUserInfo() async {
@@ -63,6 +74,15 @@ class Overall extends ChangeNotifier {
     notifyListeners();
   }
 
+  void addVault(Vault vault) {
+    listVaults.add(vault);
+    notifyListeners();
+  }
+
+  void removeVault(Vault vault) {
+    listVaults.remove(vault);
+    notifyListeners();
+  }
   void setCurrentMonthYear() {
     DateTime now = DateTime.now();
     String month = _getMonthName(now.month);
@@ -90,6 +110,24 @@ class Overall extends ChangeNotifier {
     notifyListeners();
   }
 
+  void addTransaction(Transaction transaction){
+    transactions.add(transaction);
+    setOriginalBalance(transaction);
+  }
+
+  void setOriginalBalance(Transaction transaction){
+    if (transaction.transactionType == "Deposit"){
+      originalBalance = originalBalance + transaction.getAmount();
+    }
+    else{
+      originalBalance = originalBalance - transaction.getAmount();
+      if (originalBalance < 0){
+        originalBalance = 0;
+      }
+    }
+    currentBalance = originalBalance;
+  }
+
   // Getters
   UserInfo getUserInfo() {
     return userInfo;
@@ -99,8 +137,16 @@ class Overall extends ChangeNotifier {
     return listVaults;
   }
 
+  List<Transaction> getTransactions(){
+    return transactions;
+  }
+
   double getCurrentBalance() {
     return currentBalance;
+  }
+
+  double getOriginalBalance(){
+    return originalBalance;
   }
 
   double getCurrentProfit() {
@@ -113,6 +159,10 @@ class Overall extends ChangeNotifier {
 
   String getCurrentDayMonthYear() {
     return currentDayMonthYear;
+  }
+
+  String getCurrency(){
+    return currency;
   }
 
   // Helper methods

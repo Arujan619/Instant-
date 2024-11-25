@@ -89,9 +89,10 @@ class _AddVaultPageState extends State<AddVaultPage> {
                         image: _image!,
                         daysRemaining: _daysRemaining,
                         goalAmount: _goalAmount,
-                        balanceAmount: 0.0,
+                        originalAmount: 0.0,
                         cardLinkedId: 0,
                         isLocked: false,
+                        overall: Provider.of<Overall>(context, listen: false), //added this for new vault initialization
                       );
                       Provider.of<Overall>(context, listen: false).setListVaults(
                         [...Provider.of<Overall>(context, listen: false).getListVaults(), newVault],
