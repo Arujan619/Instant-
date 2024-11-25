@@ -10,9 +10,11 @@ class Overall extends ChangeNotifier {
   List<Vault> listVaults;
   String currentMonthYear;
   String currentDayMonthYear;
+  double originalBalance;
   double currentBalance;
   double currentProfit;
   List<Transaction> transactions;
+  String currency = "CAD";
   // Constructor
   Overall()
       : userInfo = UserInfo(),
@@ -20,6 +22,7 @@ class Overall extends ChangeNotifier {
         currentMonthYear = '',
         currentDayMonthYear = '',
         currentBalance = 0.0,
+        originalBalance = 0.0,
         transactions = [],
         currentProfit = 0.0{
     //  _loadUserData();
@@ -30,10 +33,10 @@ class Overall extends ChangeNotifier {
     required this.listVaults,
     required this.currentMonthYear,
     required this.currentDayMonthYear,
-    required this.currentBalance,
+    required this.originalBalance,
     required this.currentProfit,
     required this.transactions
-  });
+  }) : currentBalance = originalBalance;
 
     // New methods for database integration
   void _loadUserData() async {
@@ -44,21 +47,9 @@ class Overall extends ChangeNotifier {
     }
   }
     
-  void addTransaction(Transaction transaction){
-    transactions.add(transaction);
-    setBalance(transaction);
-  }
-
-  void setBalance(Transaction transaction){
-    if (transaction.transactionType == "Deposit"){
-      currentBalance = currentBalance + transaction.getAmount();
-    }
-    else{
-      currentBalance = currentBalance - transaction.getAmount();
-      if (currentBalance < 0){
-        currentBalance = 0;
-      }
-    }
+  void setCurrency(String newCurrency){
+    currency = newCurrency;
+    notifyListeners();
   }
 
   void saveUserInfo() async {
@@ -119,6 +110,24 @@ class Overall extends ChangeNotifier {
     notifyListeners();
   }
 
+  void addTransaction(Transaction transaction){
+    transactions.add(transaction);
+    setOriginalBalance(transaction);
+  }
+
+  void setOriginalBalance(Transaction transaction){
+    if (transaction.transactionType == "Deposit"){
+      originalBalance = originalBalance + transaction.getAmount();
+    }
+    else{
+      originalBalance = originalBalance - transaction.getAmount();
+      if (originalBalance < 0){
+        originalBalance = 0;
+      }
+    }
+    currentBalance = originalBalance;
+  }
+
   // Getters
   UserInfo getUserInfo() {
     return userInfo;
@@ -136,6 +145,10 @@ class Overall extends ChangeNotifier {
     return currentBalance;
   }
 
+  double getOriginalBalance(){
+    return originalBalance;
+  }
+
   double getCurrentProfit() {
     return currentProfit;
   }
@@ -146,6 +159,10 @@ class Overall extends ChangeNotifier {
 
   String getCurrentDayMonthYear() {
     return currentDayMonthYear;
+  }
+
+  String getCurrency(){
+    return currency;
   }
 
   // Helper methods

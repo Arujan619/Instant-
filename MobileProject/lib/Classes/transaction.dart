@@ -6,9 +6,11 @@ class Transaction {
   int vaultId;
   // Image vaultImage;
   double amount;
+  double originalAmount;
   String transactionType;
   DateTime transactionDate;
   String transactionTime;
+  String currency;
 
   // Constructor
   Transaction()
@@ -16,19 +18,22 @@ class Transaction {
         vaultId = 0,
         // vaultImage = Image.asset('assets/default_vault.png'),
         amount = 0.0,
+        originalAmount = 0.0,
         transactionType = '',
         transactionDate = DateTime.now(),
+        currency = "CAD",
         transactionTime = '';
 
   Transaction.parameterized({
     required this.vaultName,
     required this.vaultId,
     // required this.vaultImage,
-    required this.amount,
+    required this.originalAmount,
     required this.transactionType,
     required this.transactionDate,
     required this.transactionTime,
-  });
+    this.currency = "CAD",
+  }) : amount = originalAmount;
 
 
   // Setters
@@ -87,5 +92,16 @@ class Transaction {
 
   String getTransactionTime() {
     return transactionTime;
+  }
+
+  double getOriginalAmount(){
+    return originalAmount;
+  }
+  // void resetToOriginalAmount() {
+  //   amount = originalAmount;
+  // }
+
+  void updateAmount(double exchangeRate){
+    amount = originalAmount * exchangeRate;
   }
 }

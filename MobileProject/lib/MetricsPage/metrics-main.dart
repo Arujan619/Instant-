@@ -48,16 +48,17 @@ class MetricsMainState extends State<MetricsMain>{
       image: Image.asset('assets/profile_picture.png'), 
       daysRemaining: 200, 
       goalAmount: 500, 
-      balanceAmount: 100, 
+      originalAmount: 100, 
       cardLinkedId: 0, 
+      overall: overall,
       isLocked: false
     );
-    print(vault.getBalanceAmount());
-    Transaction transaction = Transaction.parameterized(vaultName: "TestVault", vaultId: vault.getId(), amount: 800, transactionType: "Deposit", transactionDate: DateTime.now(), transactionTime: '${DateTime.now().hour}:${DateTime.now().minute}:${DateTime.now().second}');
+
+    Transaction transaction = Transaction.parameterized(vaultName: "TestVault", vaultId: vault.getId(), originalAmount: 800, transactionType: "Deposit", transactionDate: DateTime.now().add(Duration(days:1)), transactionTime: '${DateTime.now().hour}:${DateTime.now().minute}:${DateTime.now().second}');
     vault.addTransaction(transaction);
     overall.addTransaction(transaction);
-    print(vault.getBalanceAmount());
-    Transaction transaction2 = Transaction.parameterized(vaultName: "TestVault", vaultId: vault.getId(), amount: 50, transactionType: "Withdraw", transactionDate: DateTime.now(), transactionTime: '${DateTime.now().hour}:${DateTime.now().minute}:${DateTime.now().second}');
+
+    Transaction transaction2 = Transaction.parameterized(vaultName: "TestVault", vaultId: vault.getId(), originalAmount: 50, transactionType: "Withdraw", transactionDate: DateTime.now().add(Duration(days:2)), transactionTime: '${DateTime.now().hour}:${DateTime.now().minute}:${DateTime.now().second}');
     vault.addTransaction(transaction2);
     overall.addTransaction(transaction2);
 
@@ -106,9 +107,33 @@ class MetricsMainState extends State<MetricsMain>{
       },
     );
 
-    currentCurrency = selectedCurrency!;
-    await currencyConverter.convert(vaults[0], currentCurrency, selectedCurrency!);
-    setState((){});
+  
+    if(selectedCurrency != null){
+      if(selectedCurrency == "CAD"){
+        currencyConverter.reset(overall);
+      }else if (selectedCurrency != overall.getCurrency()){
+        print(selectedCurrency);
+        print(overall.getCurrency());
+        await currencyConverter.convert(overall, overall.getCurrency(), selectedCurrency!);
+      }
+      setState((){});
+    } 
+    for(var transaction in overall.getTransactions()){
+      print(transaction.getOriginalAmount());
+      print(transaction.getAmount());
+    }
+    for (var vault in overall.getListVaults()){
+      print(vault.getOriginalAmount());
+      print(vault.getBalanceAmount());
+      for (var transaction in vault.getTransactions()){
+        print(transaction.getAmount());
+        print(transaction.getAmount());
+      }
+    }
+
+    // await currencyConverter.convert(overall, currentCurrency, selectedCurrency!);
+    // currentCurrency = selectedCurrency!;
+    // setState((){});
   }
 
   @override
@@ -213,8 +238,8 @@ class MetricsMainState extends State<MetricsMain>{
                     //Remove below box once charts are implemented properly because then we can see the charts change on setState
                     const SizedBox(width: 8),
                     Text(
+                      //delete when done testing
                       overall.getCurrentBalance().toString(),
-                      // vaults[0].getBalanceAmount().toString(),
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 15,
@@ -231,77 +256,3 @@ class MetricsMainState extends State<MetricsMain>{
     );
   }
 }
-
-// class MetricsMain extends StatelessWidget {
-//   const MetricsMain({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       decoration: const BoxDecoration(
-//         image: DecorationImage(
-//           image: AssetImage('assets/backgrounds/emback.png'),
-//           fit: BoxFit.cover,
-//         ),
-//       ),
-//       child: Scaffold(
-//         backgroundColor: Colors.transparent,
-//         appBar: AppBar(
-//           backgroundColor: Colors.transparent,
-//         ),
-//         body: Stack(
-//           children: [
-//             Container(
-//               padding: const EdgeInsets.all(16.0),
-//               child: ListView(
-//                 children: [
-//                   const SizedBox(height: 100),
-//                   // Floating widget card for Line Chart
-//                   buildFloatingCard(
-//                     title: "Your earnings",
-//                     child: buildAreaChart(sampleSavingsData),
-//                   ),
-//                   const SizedBox(height: 20),
-//                   // Floating widget card for Vaults Chart
-//                   buildFloatingCardVault(
-//                     title: "Vaults Accounts",
-//                     child: buildLineChartVault(sampleVaultsData),
-//                   ),
-//                 ],
-//               ),
-//             ),
-//             // Title
-//             Positioned(
-//               top: 0,
-//               right: 16,
-//               child: Column(
-//                 crossAxisAlignment: CrossAxisAlignment.end,
-//                 mainAxisSize: MainAxisSize.min,
-//                 children: const [
-//                   Text(
-//                     'Metrics',
-//                     style: TextStyle(
-//                       fontSize: 40,
-//                       fontFamily: 'Poppins',
-//                       color: Colors.white,
-//                     ),
-//                     textAlign: TextAlign.right,
-//                   ),
-//                   Text(
-//                     'Instant+',
-//                     style: TextStyle(
-//                       fontSize: 15,
-//                       fontFamily: 'Poppins',
-//                       color: Colors.white,
-//                     ),
-//                     textAlign: TextAlign.right,
-//                   ),
-//                 ],
-//               ),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
